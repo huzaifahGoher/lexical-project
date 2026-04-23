@@ -6,10 +6,13 @@ import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { EditorState, LexicalEditor } from "lexical";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import Toolbar from "../toolbar/Toolbar";
+import "./editorTheme.css"
+import { exampleTheme } from "./theme";
 
 const config = {
   namespace: "lexical",
-  theme: {},
+  theme: exampleTheme,
   onError: console.error,
 };
 
@@ -19,14 +22,15 @@ const Editor = () => {
   };
 
   return (
-    <div className="editor-container w-full">
+    <div className="editor-container w-full bg-(--background) text-(--foreground)">
       <LexicalComposer initialConfig={config}>
+        <Toolbar />
         <RichTextPlugin
           contentEditable={
             <ContentEditable
               className="flex-1 outline-none"
               aria-placeholder={"Enter some text..."}
-              placeholder={<div className="text-gray-400">write text here</div>}
+              placeholder={<div className="text-gray-400 mt-10">write text here</div>}
             />
           }
           ErrorBoundary={LexicalErrorBoundary}

@@ -1,0 +1,127 @@
+/* Paragraph */
+.editor-paragraph {
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+
+/* Quote */
+.editor-quote {
+  border-left: 4px solid #ccc;
+  margin: 8px 0;
+  padding-left: 12px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Headings */
+.editor-heading-h1 { font-size: 2em; font-weight: bold; margin: 0.67em 0; }
+.editor-heading-h2 { font-size: 1.75em; font-weight: bold; margin: 0.75em 0; }
+.editor-heading-h3 { font-size: 1.5em; font-weight: bold; margin: 0.83em 0; }
+.editor-heading-h4 { font-size: 1.25em; font-weight: bold; margin: 1em 0; }
+.editor-heading-h5 { font-size: 1em; font-weight: bold; margin: 1.2em 0; }
+.editor-heading-h6 { font-size: 0.875em; font-weight: bold; margin: 1.4em 0; }
+
+/* Lists */
+.editor-list-ol {
+  list-style-type: decimal;
+  margin-left: 20px;
+}
+
+.editor-list-ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.editor-listItem {
+  margin: 4px 0;
+}
+
+.editor-nested-listitem {
+  margin-left: 20px;
+}
+
+.editor-listItemChecked {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.editor-listItemUnchecked {
+  text-decoration: none;
+}
+
+/* Hashtag */
+.editor-hashtag {
+  color: #3b82f6;
+}
+
+/* Image */
+.editor-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Link */
+.editor-link {
+  color: #2563eb;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Text styles */
+.editor-textBold {
+  font-weight: bold;
+}
+
+.editor-textItalic {
+  font-style: italic;
+}
+
+.editor-textUnderline {
+  text-decoration: underline;
+}
+
+.editor-textStrikethrough {
+  text-decoration: line-through;
+}
+
+.editor-textUnderlineStrikethrough {
+  text-decoration: underline line-through;
+}
+
+.editor-textSubscript {
+  vertical-align: sub;
+  font-size: 0.75em;
+}
+
+.editor-textSuperscript {
+  vertical-align: super;
+  font-size: 0.75em;
+}
+
+.editor-textCode {
+  font-family: monospace;
+  background: #f5f5f5;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+/* Code block */
+.editor-code {
+  font-family: monospace;
+  background: #1e1e1e;
+  color: #ddd;
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+/* Code Highlight Tokens */
+.editor-tokenAttr { color: #c586c0; }
+.editor-tokenProperty { color: #9cdcfe; }
+.editor-tokenSelector { color: #d7ba7d; }
+.editor-tokenOperator { color: #d4d4d4; }
+.editor-tokenFunction { color: #dcdcaa; }
+.editor-tokenVariable { color: #4ec9b0; }
+.editor-tokenComment { color: #6a9955; font-style: italic; }
+.editor-tokenPunctuation { color: #d4d4d4; }
