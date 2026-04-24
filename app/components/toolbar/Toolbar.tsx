@@ -56,11 +56,7 @@ const listOptions = [
   {
     dispatchCommand: INSERT_UNORDERED_LIST_COMMAND,
     label: "bullet list",
-  },
-  {
-    dispatchCommand: INSERT_CHECK_LIST_COMMAND,
-    label: "check list",
-  },
+  }
 ];
 
 const keysMap = new Map([
@@ -115,9 +111,6 @@ const Toolbar = () => {
         <Button
           key={`${index}-${item.label}`}
           onClick={() => {
-            // editor.update(()=>{
-            //   $insertList("bullet");
-            // })
             editor.dispatchCommand(item.dispatchCommand, undefined);
           }}
           children={<span>{item.label}</span>}

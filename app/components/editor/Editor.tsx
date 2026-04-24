@@ -41,7 +41,6 @@ const Editor = () => {
           ErrorBoundary={LexicalErrorBoundary}
         />
         <ListPlugin />
-        <CheckListPlugin />
         <TabIndentationPlugin />
         <OnChangePlugin onChange={onChange} />
       </LexicalComposer>
