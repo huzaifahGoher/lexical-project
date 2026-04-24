@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 // import { Button } from "../button/Button";
 import { Button } from "@huzaifah191001/design-library";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND } from "lexical";
+import { FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND, REDO_COMMAND, UNDO_COMMAND } from "lexical";
 import { $insertList, INSERT_CHECK_LIST_COMMAND, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from "@lexical/list";
 
 const formattingOptions = [
@@ -59,11 +59,18 @@ const listOptions = [
   }
 ];
 
+const undoRedoOptions = [
+  {label: "undo", command: UNDO_COMMAND},
+  {label: "redo", command: REDO_COMMAND},
+]
+
 const keysMap = new Map([
-  ["l", "left"],
-  ["e", "center"],
-  ["r", "right"],
-  ["j", "justify"],
+  ["l", {value: "left", command: FORMAT_ELEMENT_COMMAND}],
+  ["e", {value: "center", command: FORMAT_ELEMENT_COMMAND}],
+  ["r", {value: "right", command: FORMAT_ELEMENT_COMMAND}],
+  ["j", {value: "justify", command: FORMAT_ELEMENT_COMMAND}],
+  ["z", {value: undefined, command: UNDO_COMMAND}],
+  ["y", {value: undefined, command: REDO_COMMAND}],
 ]);
 
 type alignmentType = "left" | "right" | "center" | "justify";
@@ -75,10 +82,12 @@ const Toolbar = () => {
     const handleKeyDown = (event: KeyboardEvent) => {
       event.stopPropagation();
       if (!event.ctrlKey) return;
-      const value = keysMap.get(event.key.toLowerCase());
+      const config = keysMap.get(event.key.toLowerCase());
+      if(!config) return;
+      const {value, command} = config;
       if (!value) return;
       event.preventDefault();
-      editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, value as alignmentType);
+      editor.dispatchCommand(command, value as alignmentType || undefined);
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -112,6 +121,15 @@ const Toolbar = () => {
           key={`${index}-${item.label}`}
           onClick={() => {
             editor.dispatchCommand(item.dispatchCommand, undefined);
+          }}
+          children={<span>{item.label}</span>}
+        />
+      ))}
+      {undoRedoOptions.map((item: any, index: number) => (
+        <Button
+          key={`${index}-${item.label}`}
+          onClick={() => {
+            editor.dispatchCommand(item.command, undefined);
           }}
           children={<span>{item.label}</span>}
         />

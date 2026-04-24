@@ -13,6 +13,7 @@ import { CheckListExtension, ListItemNode, ListNode } from "@lexical/list";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
 import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 
 const config = {
   namespace: "lexical",
@@ -42,6 +43,7 @@ const Editor = () => {
         />
         <ListPlugin />
         <TabIndentationPlugin />
+        <HistoryPlugin />
         <OnChangePlugin onChange={onChange} />
       </LexicalComposer>
     </div>
