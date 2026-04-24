@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 // import { Button } from "../button/Button";
 import { Button } from "@huzaifah191001/design-library";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
@@ -25,7 +25,7 @@ const formattingOptions = [
   {
     dispatchValue: "code",
     label: "code",
-  }
+  },
 ];
 
 const alignmentOptions = [
@@ -47,8 +47,34 @@ const alignmentOptions = [
   },
 ];
 
+const keysMap = new Map([
+  ["l", "left"],
+  ["e", "center"],
+  ["r", "right"],
+  ["j", "justify"],
+]);
+
+type alignmentType = "left" | "right" | "center" | "justify";
+
 const Toolbar = () => {
   const [editor] = useLexicalComposerContext();
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      event.stopPropagation();
+      if (!event.ctrlKey) return;
+      const value = keysMap.get(event.key.toLowerCase());
+      if (!value) return;
+      event.preventDefault();
+      editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, value as alignmentType);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [editor]);
+
   return (
     <div className="max-h-10 flex flex-row flex-1 gap-2 items-center pl-2 border border-(--muted-foreground) rounded-sm bg-(--primary-foreground)">
       {formattingOptions.map((item: any, index: number) => (
