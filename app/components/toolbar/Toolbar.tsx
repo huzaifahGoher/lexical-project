@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { Button } from "@huzaifah191001/design-library";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND } from "lexical";
+import { $insertList, INSERT_CHECK_LIST_COMMAND, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from "@lexical/list";
 
 const formattingOptions = [
   {
@@ -44,6 +45,21 @@ const alignmentOptions = [
   {
     dispatchValue: "justify",
     label: "justify",
+  },
+];
+
+const listOptions = [
+  {
+    dispatchCommand: INSERT_ORDERED_LIST_COMMAND,
+    label: "number list",
+  },
+  {
+    dispatchCommand: INSERT_UNORDERED_LIST_COMMAND,
+    label: "bullet list",
+  },
+  {
+    dispatchCommand: INSERT_CHECK_LIST_COMMAND,
+    label: "check list",
   },
 ];
 
@@ -91,6 +107,18 @@ const Toolbar = () => {
           key={`${index}-${item.label}`}
           onClick={() => {
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, item.dispatchValue);
+          }}
+          children={<span>{item.label}</span>}
+        />
+      ))}
+      {listOptions.map((item: any, index: number) => (
+        <Button
+          key={`${index}-${item.label}`}
+          onClick={() => {
+            // editor.update(()=>{
+            //   $insertList("bullet");
+            // })
+            editor.dispatchCommand(item.dispatchCommand, undefined);
           }}
           children={<span>{item.label}</span>}
         />
