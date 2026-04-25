@@ -1,10 +1,12 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { SyntheticEvent, useEffect } from "react";
 // import { Button } from "../button/Button";
 import { Button } from "@huzaifah191001/design-library";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
+  $createParagraphNode,
   $getRoot,
+  $getSelection,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   REDO_COMMAND,
@@ -17,6 +19,8 @@ import {
   INSERT_UNORDERED_LIST_COMMAND,
 } from "@lexical/list";
 import { $convertToMarkdownString } from "@lexical/markdown";
+import { $setBlocksType } from "@lexical/selection";
+import { $createHeadingNode, $createQuoteNode, HeadingTagType } from "@lexical/rich-text";
 
 const formattingOptions = [
   {
@@ -101,6 +105,18 @@ const Toolbar = () => {
     });
   };
 
+  const handleHeading = (headingType = "h1") => {
+    editor.update(() => {
+      const selection = $getSelection();
+      if (!selection) return;
+      $setBlocksType(selection, () => {
+        if(headingType === "normal") return $createParagraphNode();
+        if(headingType === "quote") return $createQuoteNode();
+        return $createHeadingNode(headingType as HeadingTagType);
+      });
+    });
+  };
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       event.stopPropagation();
@@ -158,6 +174,20 @@ const Toolbar = () => {
         />
       ))}
       <Button onClick={exportMarkDown}>Export markdown</Button>
+      <select
+        onChange={(event) => {
+          handleHeading(event.target.value);
+        }}
+      >
+        <option value="normal">normal</option>
+        <option value="quote">quote</option>
+        <option value="h1">heading 1</option>
+        <option value="h2">heading 2</option>
+        <option value="h3">heading 3</option>
+        <option value="h4">heading 4</option>
+        <option value="h5">heading 5</option>
+        <option value="h6">heading 6</option>
+      </select>
     </div>
   );
 };
