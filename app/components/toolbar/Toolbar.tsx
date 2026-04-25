@@ -3,8 +3,20 @@ import React, { useEffect } from "react";
 // import { Button } from "../button/Button";
 import { Button } from "@huzaifah191001/design-library";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND, REDO_COMMAND, UNDO_COMMAND } from "lexical";
-import { $insertList, INSERT_CHECK_LIST_COMMAND, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from "@lexical/list";
+import {
+  $getRoot,
+  FORMAT_ELEMENT_COMMAND,
+  FORMAT_TEXT_COMMAND,
+  REDO_COMMAND,
+  UNDO_COMMAND,
+} from "lexical";
+import {
+  $insertList,
+  INSERT_CHECK_LIST_COMMAND,
+  INSERT_ORDERED_LIST_COMMAND,
+  INSERT_UNORDERED_LIST_COMMAND,
+} from "@lexical/list";
+import { $convertToMarkdownString } from "@lexical/markdown";
 
 const formattingOptions = [
   {
@@ -56,21 +68,21 @@ const listOptions = [
   {
     dispatchCommand: INSERT_UNORDERED_LIST_COMMAND,
     label: "bullet list",
-  }
+  },
 ];
 
 const undoRedoOptions = [
-  {label: "undo", command: UNDO_COMMAND},
-  {label: "redo", command: REDO_COMMAND},
-]
+  { label: "undo", command: UNDO_COMMAND },
+  { label: "redo", command: REDO_COMMAND },
+];
 
 const keysMap = new Map([
-  ["l", {value: "left", command: FORMAT_ELEMENT_COMMAND}],
-  ["e", {value: "center", command: FORMAT_ELEMENT_COMMAND}],
-  ["r", {value: "right", command: FORMAT_ELEMENT_COMMAND}],
-  ["j", {value: "justify", command: FORMAT_ELEMENT_COMMAND}],
-  ["z", {value: undefined, command: UNDO_COMMAND}],
-  ["y", {value: undefined, command: REDO_COMMAND}],
+  ["l", { value: "left", command: FORMAT_ELEMENT_COMMAND }],
+  ["e", { value: "center", command: FORMAT_ELEMENT_COMMAND }],
+  ["r", { value: "right", command: FORMAT_ELEMENT_COMMAND }],
+  ["j", { value: "justify", command: FORMAT_ELEMENT_COMMAND }],
+  ["z", { value: undefined, command: UNDO_COMMAND }],
+  ["y", { value: undefined, command: REDO_COMMAND }],
 ]);
 
 type alignmentType = "left" | "right" | "center" | "justify";
@@ -78,16 +90,27 @@ type alignmentType = "left" | "right" | "center" | "justify";
 const Toolbar = () => {
   const [editor] = useLexicalComposerContext();
 
+  const exportMarkDown = () => {
+    editor.update(() => {
+      const mdContent = $convertToMarkdownString(undefined, undefined);
+      const blob = new Blob([mdContent], { type: "text/markdown" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "document.md";
+      link.click();
+    });
+  };
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       event.stopPropagation();
       if (!event.ctrlKey) return;
       const config = keysMap.get(event.key.toLowerCase());
-      if(!config) return;
-      const {value, command} = config;
+      if (!config) return;
+      const { value, command } = config;
       if (!value) return;
       event.preventDefault();
-      editor.dispatchCommand(command, value as alignmentType || undefined);
+      editor.dispatchCommand(command, (value as alignmentType) || undefined);
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -134,6 +157,7 @@ const Toolbar = () => {
           children={<span>{item.label}</span>}
         />
       ))}
+      <Button onClick={exportMarkDown}>Export markdown</Button>
     </div>
   );
 };

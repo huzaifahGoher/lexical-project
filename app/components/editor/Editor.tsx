@@ -4,10 +4,16 @@ import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-import { EditorState, LexicalEditor, ParagraphNode, TextNode } from "lexical";
+import {
+  $getRoot,
+  EditorState,
+  LexicalEditor,
+  ParagraphNode,
+  TextNode,
+} from "lexical";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import Toolbar from "../toolbar/Toolbar";
-import "./editorTheme.css"
+import "./editorTheme.css";
 import { exampleTheme } from "./theme";
 import { CheckListExtension, ListItemNode, ListNode } from "@lexical/list";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
@@ -36,7 +42,9 @@ const Editor = () => {
             <ContentEditable
               className="flex-1 outline-none"
               aria-placeholder={"Enter some text..."}
-              placeholder={<div className="text-gray-400 mt-10">write text here</div>}
+              placeholder={
+                <div className="text-gray-400 mt-10">write text here</div>
+              }
             />
           }
           ErrorBoundary={LexicalErrorBoundary}
