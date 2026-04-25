@@ -20,11 +20,17 @@ import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
 import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { CodeExtension, CodeHighlightNode, CodeNode } from "@lexical/code";
+import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
+import { TRANSFORMERS } from "@lexical/markdown";
+import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+import { LinkNode } from "@lexical/link";
+import { HorizontalRuleNode } from "@lexical/extension";
 
 const config = {
   namespace: "lexical",
   theme: exampleTheme,
-  nodes: [TextNode, ParagraphNode, ListNode, ListItemNode],
+  nodes: [TextNode, ParagraphNode, ListNode, ListItemNode, CodeNode, CodeHighlightNode, HeadingNode, QuoteNode, LinkNode, HorizontalRuleNode],
   onError: console.error,
 };
 
@@ -52,6 +58,7 @@ const Editor = () => {
         <ListPlugin />
         <TabIndentationPlugin />
         <HistoryPlugin />
+        <MarkdownShortcutPlugin transformers={TRANSFORMERS}/>
         <OnChangePlugin onChange={onChange} />
       </LexicalComposer>
     </div>
