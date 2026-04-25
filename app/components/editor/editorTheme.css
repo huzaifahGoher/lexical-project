@@ -100,29 +100,30 @@
   font-size: 0.75em;
 }
 
-.editor-textCode {
+/* .editor-textCode {
   font-family: monospace;
   background: #f5f5f5;
   padding: 2px 4px;
+  color: #248fb3;
   border-radius: 3px;
-}
+} */
 
 /* Code block */
-.editor-code {
+/* .editor-code {
   font-family: monospace;
   background: #1e1e1e;
   color: #ddd;
   padding: 12px;
   border-radius: 6px;
   overflow-x: auto;
-}
+} */
 
 /* Code Highlight Tokens */
-.editor-tokenAttr { color: #c586c0; }
+/* .editor-tokenAttr { color: #c586c0; }
 .editor-tokenProperty { color: #9cdcfe; }
 .editor-tokenSelector { color: #d7ba7d; }
 .editor-tokenOperator { color: #d4d4d4; }
 .editor-tokenFunction { color: #dcdcaa; }
 .editor-tokenVariable { color: #4ec9b0; }
 .editor-tokenComment { color: #6a9955; font-style: italic; }
-.editor-tokenPunctuation { color: #d4d4d4; }
+.editor-tokenPunctuation { color: #d4d4d4; } */

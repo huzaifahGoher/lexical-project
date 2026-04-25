@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
@@ -26,11 +26,24 @@ import { TRANSFORMERS } from "@lexical/markdown";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { LinkNode } from "@lexical/link";
 import { HorizontalRuleNode } from "@lexical/extension";
+import "prismjs/themes/prism.css";
+import CodePlugin from "../codeplugin/CodePlugin";
 
 const config = {
   namespace: "lexical",
   theme: exampleTheme,
-  nodes: [TextNode, ParagraphNode, ListNode, ListItemNode, CodeNode, CodeHighlightNode, HeadingNode, QuoteNode, LinkNode, HorizontalRuleNode],
+  nodes: [
+    TextNode,
+    ParagraphNode,
+    ListNode,
+    ListItemNode,
+    CodeNode,
+    CodeHighlightNode,
+    HeadingNode,
+    QuoteNode,
+    LinkNode,
+    HorizontalRuleNode,
+  ],
   onError: console.error,
 };
 
@@ -58,7 +71,8 @@ const Editor = () => {
         <ListPlugin />
         <TabIndentationPlugin />
         <HistoryPlugin />
-        <MarkdownShortcutPlugin transformers={TRANSFORMERS}/>
+        <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+        <CodePlugin />
         <OnChangePlugin onChange={onChange} />
       </LexicalComposer>
     </div>
