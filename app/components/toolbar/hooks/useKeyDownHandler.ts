@@ -31,6 +31,7 @@ const useKeyDownHandler = () => {
             setShowMenu(false);
             return false;
           }
+          return false;
         }
         const config = keysMap.get(payload.key.toLowerCase());
         if (!config) return false;
