@@ -23,75 +23,8 @@ import {
 } from "@lexical/rich-text";
 import FloatingMenu from "../floatingmenu/FloatingMenu";
 import useKeyDownHandler from "./hooks/useKeyDownHandler";
-
-const formattingOptions = [
-  {
-    dispatchValue: "bold",
-    label: "bold",
-  },
-  {
-    dispatchValue: "italic",
-    label: "italic",
-  },
-  {
-    dispatchValue: "underline",
-    label: "underline",
-  },
-  {
-    dispatchValue: "strikethrough",
-    label: "strikethrough",
-  },
-  {
-    dispatchValue: "code",
-    label: "code",
-  },
-];
-
-const alignmentOptions = [
-  {
-    dispatchValue: "left",
-    label: "left",
-  },
-  {
-    dispatchValue: "center",
-    label: "center",
-  },
-  {
-    dispatchValue: "right",
-    label: "right",
-  },
-  {
-    dispatchValue: "justify",
-    label: "justify",
-  },
-];
-
-const listOptions = [
-  {
-    dispatchCommand: INSERT_ORDERED_LIST_COMMAND,
-    label: "number list",
-  },
-  {
-    dispatchCommand: INSERT_UNORDERED_LIST_COMMAND,
-    label: "bullet list",
-  },
-];
-
-const blockOptions = [
-  { label: "normal", value: "normal" },
-  { label: "quote", value: "quote" },
-  { label: "Heading 1", value: "h1" },
-  { label: "Heading 2", value: "h2" },
-  { label: "Heading 3", value: "h3" },
-  { label: "Heading 4", value: "h4" },
-  { label: "Heading 5", value: "h5" },
-  { label: "Heading 6", value: "h6" },
-];
-
-const undoRedoOptions = [
-  { label: "undo", command: UNDO_COMMAND },
-  { label: "redo", command: REDO_COMMAND },
-];
+import { formattingOptions, alignmentOptions, listOptions, undoRedoOptions, blockOptions } from "./constants/ToolbarConstant";
+import { globalConstants } from "@/app/constants/global/GlobalConstants";
 
 const Toolbar = () => {
   const [editor] = useLexicalComposerContext();
@@ -108,13 +41,13 @@ const Toolbar = () => {
     });
   };
 
-  const handleHeading = (headingType = "h1") => {
+  const handleHeading = (headingType = globalConstants.BLOCK.VALUES.H1) => {
     editor.update(() => {
       const selection = $getSelection();
       if (!selection) return;
       $setBlocksType(selection, () => {
-        if (headingType === "normal") return $createParagraphNode();
-        if (headingType === "quote") return $createQuoteNode();
+        if (headingType === globalConstants.BLOCK.VALUES.NORMAL) return $createParagraphNode();
+        if (headingType === globalConstants.BLOCK.VALUES.QUOTE) return $createQuoteNode();
         return $createHeadingNode(headingType as HeadingTagType);
       });
     });
