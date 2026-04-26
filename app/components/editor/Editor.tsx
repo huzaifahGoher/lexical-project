@@ -15,20 +15,20 @@ import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import Toolbar from "../toolbar/Toolbar";
 import "./editorTheme.css";
 import { exampleTheme } from "./theme";
-import { CheckListExtension, ListItemNode, ListNode } from "@lexical/list";
+import { ListItemNode, ListNode } from "@lexical/list";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
 import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import { CodeExtension, CodeHighlightNode, CodeNode } from "@lexical/code";
+import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { TRANSFORMERS } from "@lexical/markdown";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { LinkNode } from "@lexical/link";
 import { HorizontalRuleNode } from "@lexical/extension";
 import "prismjs/themes/prism.css";
-import CodePlugin from "../codeplugin/CodePlugin";
+import CodePlugin from "../plugins/codeplugin/CodePlugin";
 import { ImageNode } from "@/app/customnodes/imagenode/imageNode";
+import ImagePlugin from "../plugins/imageplugin/ImagePlugin";
 
 const config = {
   namespace: "lexical",
@@ -75,6 +75,7 @@ const Editor = () => {
         <HistoryPlugin />
         <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
         <CodePlugin />
+        <ImagePlugin />
         <OnChangePlugin onChange={onChange} />
       </LexicalComposer>
     </div>
