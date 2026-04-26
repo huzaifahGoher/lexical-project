@@ -11,12 +11,12 @@ import {
   listOptions,
   undoRedoOptions,
   blockOptions,
-} from "./constants/ToolbarConstant";
+} from "./constants/toolbarConstant";
 import {
   exportMarkDown,
   getCarretPosition,
   handleHeading,
-} from "./utils/ToolbarUtils";
+} from "./utils/toolbarUtils";
 
 const Toolbar = () => {
   const [editor] = useLexicalComposerContext();

@@ -1,4 +1,4 @@
-import { globalConstants } from "@/app/constants/global/GlobalConstants";
+import { globalConstants } from "@/app/constants/global/globalConstants";
 import { $convertToMarkdownString } from "@lexical/markdown";
 import { $createHeadingNode, $createQuoteNode, HeadingTagType } from "@lexical/rich-text";
 import { $setBlocksType } from "@lexical/selection";

@@ -1,6 +1,6 @@
 import { INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from "@lexical/list";
 import { REDO_COMMAND, UNDO_COMMAND } from "lexical";
-import { globalConstants } from "../../../constants/global/GlobalConstants";
+import { globalConstants } from "../../../constants/global/globalConstants";
 
 const formattingOptions = [
   {
