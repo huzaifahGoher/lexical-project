@@ -126,14 +126,7 @@ const Toolbar = () => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       event.stopPropagation();
-      if (!event.ctrlKey) {
-        if (event.key === "/") {
-          setShowMenu(true);
-        } else if (event.key === "Escape") {
-          setShowMenu(false);
-        }
-        return;
-      }
+      if (!event.ctrlKey) return;
       const config = keysMap.get(event.key.toLowerCase());
       if (!config) return;
       const { value, command } = config;
@@ -142,9 +135,20 @@ const Toolbar = () => {
       editor.dispatchCommand(command, (value as alignmentType) || undefined);
     };
 
+    const handleKeyUp = (event: KeyboardEvent) => {
+      if (event.key === "/") {
+        setShowMenu(true);
+      } else if (event.key === "Escape") {
+        setShowMenu(false);
+      }
+      return;
+    };
+
     window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
     };
   }, [editor]);
 
