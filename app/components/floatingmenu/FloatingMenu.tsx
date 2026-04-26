@@ -176,7 +176,7 @@ const ALL_ITEMS = COMMANDS.flatMap((g) => g.items.map((item) => ({ ...item, grou
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export default function SlashCommandMenu({
+export default function FloatingMenu({
   // In your real Lexical integration, pass these props:
   // position: { top, left } — computed from editor cursor position
   // onSelect: (commandId) => void — called when user picks a command
@@ -408,72 +408,6 @@ export default function SlashCommandMenu({
           close
         </span>
       </div>
-    </div>
-  );
-}
-
-
-// ─── Demo Wrapper (remove this in your real editor) ───────────────────────────
-
-export function FloatingMenu() {
-  const [open, setOpen] = useState(false);
-  const [lastSelected, setLastSelected] = useState(null);
-
-  return (
-    <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center gap-6 p-8 font-sans">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold text-neutral-800 mb-1">Slash Command Menu</h1>
-        <p className="text-sm text-neutral-500">
-          Lexical editor component — React + Tailwind
-        </p>
-      </div>
-
-      {/* Fake editor surface */}
-      <div className="w-full max-w-2xl bg-white rounded-2xl border border-neutral-200 shadow-sm p-8 min-h-48 relative">
-        <p className="text-neutral-300 text-sm select-none">
-          This is your Lexical editor area. In your real implementation, the menu appears at the
-          cursor position when the user types{" "}
-          <kbd className="px-1.5 py-0.5 bg-neutral-100 rounded text-neutral-500 font-mono text-xs">
-            /
-          </kbd>
-          .
-        </p>
-
-        {lastSelected && (
-          <div className="mt-4 inline-flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 text-sm px-3 py-1.5 rounded-lg">
-            <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-            </svg>
-            Command selected: <strong>{lastSelected}</strong>
-          </div>
-        )}
-
-        {/* The actual floating menu — rendered inside editor in real usage */}
-        {open && (
-          <SlashCommandMenu
-            position={{ top: 200, left: 120 }}
-            onSelect={(id) => {
-              setLastSelected(id);
-              setOpen(false);
-            }}
-            onClose={() => setOpen(false)}
-          />
-        )}
-      </div>
-
-      <button
-        onClick={() => { setOpen(true); setLastSelected(null); }}
-        className="px-5 py-2.5 bg-neutral-900 text-white text-sm font-medium rounded-xl hover:bg-neutral-700 transition-colors"
-      >
-        Open Menu (simulates typing /)
-      </button>
-
-      <p className="text-xs text-neutral-400 text-center max-w-sm">
-        In real Lexical usage: listen for <code className="bg-neutral-100 px-1 rounded">TextNode</code> mutations,
-        detect the <code className="bg-neutral-100 px-1 rounded">/</code> character,
-        compute cursor coords via <code className="bg-neutral-100 px-1 rounded">getSelection()</code>,
-        then render this menu at that position.
-      </p>
     </div>
   );
 }

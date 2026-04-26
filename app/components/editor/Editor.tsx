@@ -76,7 +76,6 @@ const Editor = () => {
         <CodePlugin />
         <OnChangePlugin onChange={onChange} />
       </LexicalComposer>
-      <FloatingMenu />
     </div>
   );
 };
