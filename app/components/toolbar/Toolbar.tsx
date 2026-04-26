@@ -2,14 +2,21 @@
 import React from "react";
 import { Button } from "@huzaifah191001/design-library";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import {
-  FORMAT_ELEMENT_COMMAND,
-  FORMAT_TEXT_COMMAND,
-} from "lexical";
+import { FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND } from "lexical";
 import FloatingMenu from "../floatingmenu/FloatingMenu";
 import useKeyDownHandler from "./hooks/useKeyDownHandler";
-import { formattingOptions, alignmentOptions, listOptions, undoRedoOptions, blockOptions } from "./constants/ToolbarConstant";
-import { exportMarkDown, getCarretPosition, handleHeading } from "./utils/ToolbarUtils";
+import {
+  formattingOptions,
+  alignmentOptions,
+  listOptions,
+  undoRedoOptions,
+  blockOptions,
+} from "./constants/ToolbarConstant";
+import {
+  exportMarkDown,
+  getCarretPosition,
+  handleHeading,
+} from "./utils/ToolbarUtils";
 
 const Toolbar = () => {
   const [editor] = useLexicalComposerContext();
@@ -53,7 +60,7 @@ const Toolbar = () => {
           children={<span>{item.label}</span>}
         />
       ))}
-      <Button onClick={()=>exportMarkDown(editor)}>Export markdown</Button>
+      <Button onClick={() => exportMarkDown(editor)}>Export markdown</Button>
       <select
         onChange={(event) => {
           handleHeading(editor, event.target.value);
@@ -73,8 +80,12 @@ const Toolbar = () => {
           position={getCarretPosition(showMenu)}
           onSelect={() => {
             setShowMenu(false);
+            editor.focus();
           }}
-          onClose={() => setShowMenu(false)}
+          onClose={() => {
+            setShowMenu(false);
+            editor.focus();
+          }}
         />
       )}
     </div>

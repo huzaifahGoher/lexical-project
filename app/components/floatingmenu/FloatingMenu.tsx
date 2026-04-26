@@ -1,8 +1,41 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { ReactNode } from "react";
+
+// ─── Type Definitions ─────────────────────────────────────────────────────────
+
+interface CommandItem {
+  id: string;
+  label: string;
+  description: string;
+  icon: string | ReactNode;
+  iconType: "text" | "svg";
+  keywords: string[];
+  isAI?: boolean;
+}
+
+interface CommandGroup {
+  group: string;
+  items: CommandItem[];
+}
+
+interface Position {
+  top: number;
+  left: number;
+}
+
+interface FloatingMenuProps {
+  position?: Position;
+  onSelect?: (commandId: string) => void;
+  onClose?: () => void;
+}
+
+interface CommandItemWithGroup extends CommandItem {
+  group: string;
+}
 
 // ─── Command Definitions ──────────────────────────────────────────────────────
 
-const COMMANDS = [
+const COMMANDS: CommandGroup[] = [
   {
     group: "Basic Blocks",
     items: [
@@ -172,7 +205,7 @@ const COMMANDS = [
 ];
 
 // Flatten all items for search
-const ALL_ITEMS = COMMANDS.flatMap((g) => g.items.map((item) => ({ ...item, group: g.group })));
+const ALL_ITEMS: CommandItemWithGroup[] = COMMANDS.flatMap((g) => g.items.map((item) => ({ ...item, group: g.group })));
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
@@ -184,14 +217,14 @@ export default function FloatingMenu({
   position = { top: 120, left: 80 },
   onSelect,
   onClose,
-}) {
-  const [query, setQuery] = useState("");
-  const [activeIndex, setActiveIndex] = useState(0);
-  const menuRef = useRef(null);
-  const inputRef = useRef(null);
+}: FloatingMenuProps) {
+  const [query, setQuery] = useState<string>("");
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Filter commands based on query
-  const filtered = query.trim()
+  const filtered: CommandItemWithGroup[] | null = query.trim()
     ? ALL_ITEMS.filter(
         (item) =>
           item.label.toLowerCase().includes(query.toLowerCase()) ||
@@ -200,11 +233,11 @@ export default function FloatingMenu({
     : null; // null means show all grouped
 
   // Grouped result for display
-  const groupedResults = filtered
+  const groupedResults: CommandGroup[] = filtered
     ? [{ group: "Results", items: filtered }]
     : COMMANDS;
 
-  const flatResults = filtered ?? ALL_ITEMS;
+  const flatResults: CommandItemWithGroup[] = filtered ?? ALL_ITEMS;
 
   // Keep activeIndex in bounds
   useEffect(() => {
@@ -213,7 +246,7 @@ export default function FloatingMenu({
 
   // Keyboard navigation
   const handleKeyDown = useCallback(
-    (e) => {
+    (e: KeyboardEvent) => {
       if (e.key === "ArrowDown") {
         e.preventDefault();
         setActiveIndex((i) => Math.min(i + 1, flatResults.length - 1));
@@ -238,8 +271,8 @@ export default function FloatingMenu({
 
   // Close on outside click
   useEffect(() => {
-    const handler = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
+    const handler = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         onClose?.();
       }
     };
@@ -258,7 +291,7 @@ export default function FloatingMenu({
     el?.scrollIntoView({ block: "nearest" });
   }, [activeIndex]);
 
-  const handleSelect = (id) => {
+  const handleSelect = (id: string) => {
     onSelect?.(id);
     onClose?.();
     // In real Lexical usage, dispatch the appropriate command here
