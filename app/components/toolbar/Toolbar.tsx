@@ -1,5 +1,5 @@
 "use client";
-import React, { SyntheticEvent, useEffect } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 // import { Button } from "../button/Button";
 import { Button } from "@huzaifah191001/design-library";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
@@ -20,7 +20,11 @@ import {
 } from "@lexical/list";
 import { $convertToMarkdownString } from "@lexical/markdown";
 import { $setBlocksType } from "@lexical/selection";
-import { $createHeadingNode, $createQuoteNode, HeadingTagType } from "@lexical/rich-text";
+import {
+  $createHeadingNode,
+  $createQuoteNode,
+  HeadingTagType,
+} from "@lexical/rich-text";
 
 const formattingOptions = [
   {
@@ -93,6 +97,7 @@ type alignmentType = "left" | "right" | "center" | "justify";
 
 const Toolbar = () => {
   const [editor] = useLexicalComposerContext();
+  const [showMenu, setShowMenu] = useState(false);
 
   const exportMarkDown = () => {
     editor.update(() => {
@@ -110,8 +115,8 @@ const Toolbar = () => {
       const selection = $getSelection();
       if (!selection) return;
       $setBlocksType(selection, () => {
-        if(headingType === "normal") return $createParagraphNode();
-        if(headingType === "quote") return $createQuoteNode();
+        if (headingType === "normal") return $createParagraphNode();
+        if (headingType === "quote") return $createQuoteNode();
         return $createHeadingNode(headingType as HeadingTagType);
       });
     });
@@ -120,7 +125,15 @@ const Toolbar = () => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       event.stopPropagation();
-      if (!event.ctrlKey) return;
+      if (!event.ctrlKey) {
+        if(event.key === "/") {
+          setShowMenu(true);
+        }
+        else if (event.key === "Escape") {
+          setShowMenu(false);
+        }
+        return;
+      }
       const config = keysMap.get(event.key.toLowerCase());
       if (!config) return;
       const { value, command } = config;
@@ -188,6 +201,12 @@ const Toolbar = () => {
         <option value="h5">heading 5</option>
         <option value="h6">heading 6</option>
       </select>
+
+      {showMenu && (
+        <div className="fixed t-50 bg-white w-200 h-200">
+
+        </div>
+      )}
     </div>
   );
 };
