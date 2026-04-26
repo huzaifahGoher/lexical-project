@@ -55,4 +55,8 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     img.src = this.__src;
     return img;
   }
+
+  updateDOM(_prevNode: unknown, _dom: HTMLElement, _config: EditorConfig): boolean {
+    return false;
+  }
 }
