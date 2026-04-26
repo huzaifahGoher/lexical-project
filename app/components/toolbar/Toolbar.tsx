@@ -25,6 +25,7 @@ import {
   $createQuoteNode,
   HeadingTagType,
 } from "@lexical/rich-text";
+import FloatingMenu from "../floatingmenu/FloatingMenu";
 
 const formattingOptions = [
   {
@@ -126,10 +127,9 @@ const Toolbar = () => {
     const handleKeyDown = (event: KeyboardEvent) => {
       event.stopPropagation();
       if (!event.ctrlKey) {
-        if(event.key === "/") {
+        if (event.key === "/") {
           setShowMenu(true);
-        }
-        else if (event.key === "Escape") {
+        } else if (event.key === "Escape") {
           setShowMenu(false);
         }
         return;
@@ -202,11 +202,14 @@ const Toolbar = () => {
         <option value="h6">heading 6</option>
       </select>
 
-      {/* {showMenu && (
-        <div className="fixed t-50 bg-white w-200 h-200">
-
-        </div>
-      )} */}
+      {showMenu && (
+        <FloatingMenu
+          onSelect={() => {
+            setShowMenu(false);
+          }}
+          onClose={() => setShowMenu(false)}
+        />
+      )}
     </div>
   );
 };
