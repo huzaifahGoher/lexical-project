@@ -202,11 +202,11 @@ const Toolbar = () => {
         <option value="h6">heading 6</option>
       </select>
 
-      {showMenu && (
+      {/* {showMenu && (
         <div className="fixed t-50 bg-white w-200 h-200">
 
         </div>
-      )}
+      )} */}
     </div>
   );
 };

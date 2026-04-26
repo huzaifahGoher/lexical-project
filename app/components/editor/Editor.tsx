@@ -28,6 +28,7 @@ import { LinkNode } from "@lexical/link";
 import { HorizontalRuleNode } from "@lexical/extension";
 import "prismjs/themes/prism.css";
 import CodePlugin from "../codeplugin/CodePlugin";
+import { FloatingMenu } from "../floatingmenu/FloatingMenu";
 
 const config = {
   namespace: "lexical",
@@ -75,6 +76,7 @@ const Editor = () => {
         <CodePlugin />
         <OnChangePlugin onChange={onChange} />
       </LexicalComposer>
+      <FloatingMenu />
     </div>
   );
 };
