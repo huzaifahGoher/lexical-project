@@ -1,24 +1,16 @@
 "use client";
-import React, { SyntheticEvent, useEffect, useState } from "react";
-// import { Button } from "../button/Button";
+import React from "react";
 import { Button } from "@huzaifah191001/design-library";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
   $createParagraphNode,
-  $getRoot,
   $getSelection,
-  COMMAND_PRIORITY_EDITOR,
-  COMMAND_PRIORITY_LOW,
-  CommandListener,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
-  KEY_DOWN_COMMAND,
   REDO_COMMAND,
   UNDO_COMMAND,
 } from "lexical";
 import {
-  $insertList,
-  INSERT_CHECK_LIST_COMMAND,
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
 } from "@lexical/list";
@@ -30,6 +22,7 @@ import {
   HeadingTagType,
 } from "@lexical/rich-text";
 import FloatingMenu from "../floatingmenu/FloatingMenu";
+import useKeyDownHandler from "./hooks/useKeyDownHandler";
 
 const formattingOptions = [
   {
@@ -84,23 +77,25 @@ const listOptions = [
   },
 ];
 
+const blockOptions = [
+  { label: "normal", value: "normal" },
+  { label: "quote", value: "quote" },
+  { label: "Heading 1", value: "h1" },
+  { label: "Heading 2", value: "h2" },
+  { label: "Heading 3", value: "h3" },
+  { label: "Heading 4", value: "h4" },
+  { label: "Heading 5", value: "h5" },
+  { label: "Heading 6", value: "h6" },
+];
+
 const undoRedoOptions = [
   { label: "undo", command: UNDO_COMMAND },
   { label: "redo", command: REDO_COMMAND },
 ];
 
-const keysMap = new Map([
-  ["l", { value: "left", command: FORMAT_ELEMENT_COMMAND }],
-  ["e", { value: "center", command: FORMAT_ELEMENT_COMMAND }],
-  ["r", { value: "right", command: FORMAT_ELEMENT_COMMAND }],
-  ["j", { value: "justify", command: FORMAT_ELEMENT_COMMAND }],
-]);
-
-type alignmentType = "left" | "right" | "center" | "justify";
-
 const Toolbar = () => {
   const [editor] = useLexicalComposerContext();
-  const [showMenu, setShowMenu] = useState(false);
+  const { showMenu, setShowMenu } = useKeyDownHandler();
 
   const exportMarkDown = () => {
     editor.update(() => {
@@ -124,30 +119,6 @@ const Toolbar = () => {
       });
     });
   };
-
-  useEffect(() => {
-    editor.registerCommand(
-      KEY_DOWN_COMMAND,
-      (payload: KeyboardEvent) => {
-        if (!payload.ctrlKey) {
-          if (payload.key === "/") {
-            setShowMenu(true);
-          } else if (payload.key === "Escape") {
-            setShowMenu(false);
-          }
-          return false;
-        }
-        const config = keysMap.get(payload.key.toLowerCase());
-        if (!config) return false;
-        const { value, command } = config;
-        if (!value) return false;
-        payload?.preventDefault();
-        editor.dispatchCommand(command, (value as alignmentType) || undefined);
-        return true;
-      },
-      COMMAND_PRIORITY_LOW
-    );
-  }, [editor]);
 
   return (
     <div className="max-h-10 flex flex-row flex-1 gap-2 items-center pl-2 border border-(--muted-foreground) rounded-sm bg-(--primary-foreground)">
@@ -193,14 +164,13 @@ const Toolbar = () => {
           handleHeading(event.target.value);
         }}
       >
-        <option value="normal">normal</option>
-        <option value="quote">quote</option>
-        <option value="h1">heading 1</option>
-        <option value="h2">heading 2</option>
-        <option value="h3">heading 3</option>
-        <option value="h4">heading 4</option>
-        <option value="h5">heading 5</option>
-        <option value="h6">heading 6</option>
+        {blockOptions.map((item: any, index) => (
+          <option
+            key={`${index}-${item.label}`}
+            label={item.label}
+            value={item.value}
+          />
+        ))}
       </select>
 
       {showMenu && (
