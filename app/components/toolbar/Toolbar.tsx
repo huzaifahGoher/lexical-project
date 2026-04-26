@@ -7,8 +7,12 @@ import {
   $createParagraphNode,
   $getRoot,
   $getSelection,
+  COMMAND_PRIORITY_EDITOR,
+  COMMAND_PRIORITY_LOW,
+  CommandListener,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
+  KEY_DOWN_COMMAND,
   REDO_COMMAND,
   UNDO_COMMAND,
 } from "lexical";
@@ -90,8 +94,6 @@ const keysMap = new Map([
   ["e", { value: "center", command: FORMAT_ELEMENT_COMMAND }],
   ["r", { value: "right", command: FORMAT_ELEMENT_COMMAND }],
   ["j", { value: "justify", command: FORMAT_ELEMENT_COMMAND }],
-  ["z", { value: undefined, command: UNDO_COMMAND }],
-  ["y", { value: undefined, command: REDO_COMMAND }],
 ]);
 
 type alignmentType = "left" | "right" | "center" | "justify";
@@ -124,32 +126,27 @@ const Toolbar = () => {
   };
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      event.stopPropagation();
-      if (!event.ctrlKey) return;
-      const config = keysMap.get(event.key.toLowerCase());
-      if (!config) return;
-      const { value, command } = config;
-      if (!value) return;
-      event.preventDefault();
-      editor.dispatchCommand(command, (value as alignmentType) || undefined);
-    };
-
-    const handleKeyUp = (event: KeyboardEvent) => {
-      if (event.key === "/") {
-        setShowMenu(true);
-      } else if (event.key === "Escape") {
-        setShowMenu(false);
-      }
-      return;
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
+    editor.registerCommand(
+      KEY_DOWN_COMMAND,
+      (payload: KeyboardEvent) => {
+        if (!payload.ctrlKey) {
+          if (payload.key === "/") {
+            setShowMenu(true);
+          } else if (payload.key === "Escape") {
+            setShowMenu(false);
+          }
+          return false;
+        }
+        const config = keysMap.get(payload.key.toLowerCase());
+        if (!config) return false;
+        const { value, command } = config;
+        if (!value) return false;
+        payload?.preventDefault();
+        editor.dispatchCommand(command, (value as alignmentType) || undefined);
+        return true;
+      },
+      COMMAND_PRIORITY_LOW
+    );
   }, [editor]);
 
   return (
