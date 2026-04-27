@@ -1,11 +1,68 @@
-.image-class {
-    border: 2px solid;
-    padding: 5px;
-    border-radius: 15px;
-    opacity: 0.95;
+.image-container {
+  position: relative;
+  display: inline-block;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
 }
 
-.image-class:hover {
-    opacity: 1;
-    border-color: rgb(82, 180, 236);
+.image-container:hover {
+  border-color: #ccc;
+}
+
+.image-container.selected {
+  border-color: #007acc;
+  box-shadow: 0 0 0 1px #007acc;
+}
+
+.image-container img {
+  display: block;
+  border-radius: 6px;
+}
+
+/* Resize handles */
+.resize-handle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #007acc;
+  border: 1px solid white;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.resize-handle:hover {
+  background: #005a9e;
+  transform: scale(1.2);
+}
+
+/* Corner positions */
+.resize-handle.nw {
+  top: -4px;
+  left: -4px;
+  cursor: nw-resize;
+}
+
+.resize-handle.ne {
+  top: -4px;
+  right: -4px;
+  cursor: ne-resize;
+}
+
+.resize-handle.sw {
+  bottom: -4px;
+  left: -4px;
+  cursor: sw-resize;
+}
+
+.resize-handle.se {
+  bottom: -4px;
+  right: -4px;
+  cursor: se-resize;
+}
+
+/* Hide handles when not selected */
+.image-container:not(.selected) .resize-handle {
+  display: none;
 }
