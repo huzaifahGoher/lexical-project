@@ -1,0 +1,11 @@
+.image-class {
+    border: 2px solid;
+    padding: 5px;
+    border-radius: 15px;
+    opacity: 0.95;
+}
+
+.image-class:hover {
+    opacity: 1;
+    border-color: rgb(82, 180, 236);
+}
