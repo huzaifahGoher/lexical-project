@@ -13,15 +13,6 @@ const ImagePlugin = () => {
         const items = payload.clipboardData?.items;
         if (!items) return false;
         
-        // Check if there's an image first - prioritize image over text
-        let hasImage = false;
-        for (const item of items) {
-          if (item.type.includes("image")) {
-            hasImage = true;
-            break;
-          }
-        }
-        
         for (const item of items) {
           if (item.type.includes("image")) {
             payload.preventDefault();
@@ -40,18 +31,6 @@ const ImagePlugin = () => {
               reader.readAsDataURL(file);
             }
             return true; // Stop processing other items
-          } else if (item.type.includes("text") && !hasImage) {
-            // Only process text if there's no image
-            item.getAsString((data: string) => {
-              if (!data || !data.startsWith('http')) return; // Only process URLs
-              payload.preventDefault();
-              payload.stopPropagation();
-              editor.update(() => {
-                const imageNode = $createImageNode(data);
-                $insertNodes([imageNode]);
-              });
-            });
-            return true;
           }
         }
         return false;
