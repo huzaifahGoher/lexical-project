@@ -5,13 +5,14 @@ import {
   LexicalNode,
   SerializedLexicalNode,
 } from "lexical";
-import { JSX } from "react";
+import React, { JSX } from "react";
 import { customNodesConstants } from "../constants/customNodeConstants";
 import {
   ImageNodeType,
   SerializedImageNodeType,
 } from "../types/customNodeTypes";
 import { $createImageNode } from "../utils/customNodeUtils";
+import { ImageNodeDecorator } from "./ImageNodeDecorator";
 
 export class ImageNode extends DecoratorNode<JSX.Element> {
   __src: string;
@@ -25,11 +26,11 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     return customNodesConstants.IMAGE.TYPE;
   }
 
-  static clone(node: ImageNodeType): LexicalNode {
+  static clone(node: ImageNode): LexicalNode {
     return new ImageNode(node.__src, node.__key);
   }
 
-  exportJSON(): SerializedLexicalNode {
+  exportJSON(): SerializedImageNodeType {
     return {
       ...super.exportJSON(),
       ...{ src: this.__src },
@@ -51,12 +52,16 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   }
 
   createDOM(_config: EditorConfig, _editor: LexicalEditor): HTMLElement {
-    const img = document.createElement("img");
-    img.src = this.__src;
-    return img;
+    const div = document.createElement("div");
+    div.style.display = "inline-block";
+    return div;
   }
 
   updateDOM(_prevNode: unknown, _dom: HTMLElement, _config: EditorConfig): boolean {
     return false;
+  }
+
+  decorate(editor: LexicalEditor, config: EditorConfig): JSX.Element {
+    return React.createElement(ImageNodeDecorator, { node: this.exportJSON() });
   }
 }
