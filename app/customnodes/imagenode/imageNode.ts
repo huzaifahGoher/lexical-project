@@ -62,6 +62,6 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   }
 
   decorate(editor: LexicalEditor, config: EditorConfig): JSX.Element {
-    return React.createElement(ImageNodeDecorator, { node: this.exportJSON() });
+    return React.createElement(ImageNodeDecorator, { node: this.exportJSON(), nodeKey: this.getKey() });
   }
 }
