@@ -2,19 +2,16 @@ import React, { JSX, useState, useRef, useCallback, useEffect } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { SerializedImageNodeType } from "../types/customNodeTypes";
 import "./ImageNodeDecorator.css";
+import {
+  $getNodeByKey,
+  COMMAND_PRIORITY_LOW,
+  SELECTION_CHANGE_COMMAND,
+} from "lexical";
 
 type ImageNodeDecoratorProps = {
   node: SerializedImageNodeType;
   nodeKey: string;
 };
-
-function getNextSibling(node: any) {
-  return node.getNextSibling();
-}
-
-function getPreviousSibling(node: any) {
-  return node.getPreviousSibling();
-}
 
 export function ImageNodeDecorator({
   node,
@@ -26,60 +23,74 @@ export function ImageNodeDecorator({
   const containerRef = useRef<HTMLDivElement>(null);
   const startPos = useRef({ x: 0, y: 0, width: 0, height: 0 });
 
-  const handleMouseDown = useCallback(
-    (e: React.MouseEvent, corner: string) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      const rect = containerRef.current?.getBoundingClientRect();
-      if (!rect) return;
-
-      startPos.current = {
-        x: e.clientX,
-        y: e.clientY,
-        width: dimensions.width,
-        height: dimensions.height,
-      };
-
-      const handleMouseMove = (e: MouseEvent) => {
-        const deltaX = e.clientX - startPos.current.x;
-        const deltaY = e.clientY - startPos.current.y;
-
-        let newWidth = startPos.current.width;
-        let newHeight = startPos.current.height;
-
-        switch (corner) {
-          case "se": // bottom-right
-            newWidth = Math.max(50, startPos.current.width + deltaX);
-            newHeight = Math.max(50, startPos.current.height + deltaY);
-            break;
-          case "sw": // bottom-left
-            newWidth = Math.max(50, startPos.current.width - deltaX);
-            newHeight = Math.max(50, startPos.current.height + deltaY);
-            break;
-          case "ne": // top-right
-            newWidth = Math.max(50, startPos.current.width + deltaX);
-            newHeight = Math.max(50, startPos.current.height - deltaY);
-            break;
-          case "nw": // top-left
-            newWidth = Math.max(50, startPos.current.width - deltaX);
-            newHeight = Math.max(50, startPos.current.height - deltaY);
-            break;
+  useEffect(() => {
+    editor.registerCommand(
+      SELECTION_CHANGE_COMMAND,
+      () => {
+        const node = $getNodeByKey(nodeKey);
+        console.log(node, node?.isSelected(), isSelected);
+        if (node && node.isSelected() && !isSelected) {
+          setIsSelected(true);
+        } else if (node && !node.isSelected() && isSelected) {
+          setIsSelected(false);
         }
+        return false;
+      },
+      COMMAND_PRIORITY_LOW
+    );
+  }, []);
 
-        setDimensions({ width: newWidth, height: newHeight });
-      };
+  const handleMouseDown = (e: React.MouseEvent, corner: string) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-      const handleMouseUp = () => {
-        document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("mouseup", handleMouseUp);
-      };
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
 
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-    },
-    [dimensions]
-  );
+    startPos.current = {
+      x: e.clientX,
+      y: e.clientY,
+      width: dimensions.width,
+      height: dimensions.height,
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const deltaX = e.clientX - startPos.current.x;
+      const deltaY = e.clientY - startPos.current.y;
+
+      let newWidth = startPos.current.width;
+      let newHeight = startPos.current.height;
+
+      switch (corner) {
+        case "se": // bottom-right
+          newWidth = Math.max(50, startPos.current.width + deltaX);
+          newHeight = Math.max(50, startPos.current.height + deltaY);
+          break;
+        case "sw": // bottom-left
+          newWidth = Math.max(50, startPos.current.width - deltaX);
+          newHeight = Math.max(50, startPos.current.height + deltaY);
+          break;
+        case "ne": // top-right
+          newWidth = Math.max(50, startPos.current.width + deltaX);
+          newHeight = Math.max(50, startPos.current.height - deltaY);
+          break;
+        case "nw": // top-left
+          newWidth = Math.max(50, startPos.current.width - deltaX);
+          newHeight = Math.max(50, startPos.current.height - deltaY);
+          break;
+      }
+
+      setDimensions({ width: newWidth, height: newHeight });
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
 
   return (
     <div
