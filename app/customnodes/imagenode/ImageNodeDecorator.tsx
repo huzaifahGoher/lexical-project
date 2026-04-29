@@ -4,6 +4,7 @@ import { SerializedImageNodeType } from "../types/customNodeTypes";
 import "./ImageNodeDecorator.css";
 import {
   $getNodeByKey,
+  $getSelection,
   COMMAND_PRIORITY_LOW,
   SELECTION_CHANGE_COMMAND,
 } from "lexical";
@@ -28,10 +29,9 @@ export function ImageNodeDecorator({
       SELECTION_CHANGE_COMMAND,
       () => {
         const node = $getNodeByKey(nodeKey);
-        console.log(node, node?.isSelected(), isSelected);
-        if (node && node.isSelected() && !isSelected) {
+        if (node && node.isSelected()) {
           setIsSelected(true);
-        } else if (node && !node.isSelected() && isSelected) {
+        } else if (node && !node.isSelected()) {
           setIsSelected(false);
         }
         return false;
