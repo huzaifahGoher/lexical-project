@@ -1,9 +1,17 @@
 import { globalConstants } from "@/app/constants/global/globalConstants";
 import { $convertToMarkdownString } from "@lexical/markdown";
-import { $createHeadingNode, $createQuoteNode, HeadingTagType } from "@lexical/rich-text";
+import {
+  $createHeadingNode,
+  $createQuoteNode,
+  HeadingTagType,
+} from "@lexical/rich-text";
 import { $setBlocksType } from "@lexical/selection";
-import { $createParagraphNode, $getSelection, LexicalEditor } from "lexical";
-
+import {
+  $createParagraphNode,
+  $getRoot,
+  $getSelection,
+  LexicalEditor,
+} from "lexical";
 
 const exportMarkDown = (editor: LexicalEditor) => {
   editor.update(() => {
@@ -25,18 +33,28 @@ const getCarretPosition = (showMenu: boolean) => {
   return { top: rect.top, left: rect.left };
 };
 
-const handleHeading = (editor: LexicalEditor, headingType = globalConstants.BLOCK.VALUES.H1) => {
+const handleHeading = (
+  editor: LexicalEditor,
+  headingType = globalConstants.BLOCK.VALUES.H1
+) => {
+  const returnBlockNode = () => {
+    if (headingType === globalConstants.BLOCK.VALUES.NORMAL)
+      return $createParagraphNode();
+    if (headingType === globalConstants.BLOCK.VALUES.QUOTE)
+      return $createQuoteNode();
+    return $createHeadingNode(headingType as HeadingTagType);
+  };
+
   editor.update(() => {
     const selection = $getSelection();
-    if (!selection) return;
-    $setBlocksType(selection, () => {
-      if (headingType === globalConstants.BLOCK.VALUES.NORMAL)
-        return $createParagraphNode();
-      if (headingType === globalConstants.BLOCK.VALUES.QUOTE)
-        return $createQuoteNode();
-      return $createHeadingNode(headingType as HeadingTagType);
-    });
+    if (!selection) {
+      const root = $getRoot();
+      const nodeToAdd = returnBlockNode();
+      root.append(nodeToAdd);
+      return;
+    }
+    $setBlocksType(selection, returnBlockNode);
   });
 };
 
-export {handleHeading, getCarretPosition, exportMarkDown}
+export { handleHeading, getCarretPosition, exportMarkDown };
