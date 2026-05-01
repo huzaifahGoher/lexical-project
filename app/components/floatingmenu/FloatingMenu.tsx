@@ -1,6 +1,8 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { ReactNode } from "react";
+import { handleHeading } from "../toolbar/utils/toolbarUtils";
+import { globalConstants } from "@/app/constants/global/globalConstants";
 
 // ─── Type Definitions ─────────────────────────────────────────────────────────
 
@@ -11,6 +13,8 @@ interface CommandItem {
   icon: string | ReactNode;
   iconType: "text" | "svg";
   keywords: string[];
+  type?: string;
+  value?: string;
   isAI?: boolean;
 }
 
@@ -45,6 +49,8 @@ const COMMANDS: CommandGroup[] = [
         label: "Heading 1",
         description: "Large section heading",
         icon: "H1",
+        type: "block",
+        value: globalConstants.BLOCK.VALUES.H1,
         iconType: "text",
         keywords: ["h1", "heading", "title", "large"],
       },
@@ -53,6 +59,8 @@ const COMMANDS: CommandGroup[] = [
         label: "Heading 2",
         description: "Medium section heading",
         icon: "H2",
+        type: "block",
+        value: globalConstants.BLOCK.VALUES.H2,
         iconType: "text",
         keywords: ["h2", "heading", "subtitle", "medium"],
       },
@@ -61,6 +69,8 @@ const COMMANDS: CommandGroup[] = [
         label: "Heading 3",
         description: "Small section heading",
         icon: "H3",
+        type: "block",
+        value: globalConstants.BLOCK.VALUES.H3,
         iconType: "text",
         keywords: ["h3", "heading", "small"],
       },
@@ -69,6 +79,8 @@ const COMMANDS: CommandGroup[] = [
         label: "Paragraph",
         description: "Plain text block",
         icon: "¶",
+        type: "block",
+        value: globalConstants.BLOCK.VALUES.NORMAL,
         iconType: "text",
         keywords: ["text", "paragraph", "plain", "body"],
       },
@@ -81,6 +93,8 @@ const COMMANDS: CommandGroup[] = [
             <path d="M6 4a1 1 0 00-1 1v4a1 1 0 001 1h2.5l-1 2H6a1 1 0 000 2h2a1 1 0 00.894-.553l2-4A1 1 0 0010 8V5a1 1 0 00-1-1H6zm8 0a1 1 0 00-1 1v4a1 1 0 001 1h2.5l-1 2H14a1 1 0 000 2h2a1 1 0 00.894-.553l2-4A1 1 0 0018 8V5a1 1 0 00-1-1h-3z" />
           </svg>
         ),
+        type: "block",
+        value: globalConstants.BLOCK.VALUES.QUOTE,
         iconType: "svg",
         keywords: ["quote", "blockquote", "callout"],
       },
@@ -98,6 +112,8 @@ const COMMANDS: CommandGroup[] = [
             <path fillRule="evenodd" d="M3 5a1 1 0 100 2 1 1 0 000-2zm3 1a1 1 0 011-1h10a1 1 0 110 2H7a1 1 0 01-1-1zm-3 5a1 1 0 100 2 1 1 0 000-2zm3 1a1 1 0 011-1h10a1 1 0 110 2H7a1 1 0 01-1-1zm-3 5a1 1 0 100 2 1 1 0 000-2zm3 1a1 1 0 011-1h10a1 1 0 110 2H7a1 1 0 01-1-1z" clipRule="evenodd" />
           </svg>
         ),
+        type: "list",
+        value: "number",
         iconType: "svg",
         keywords: ["bullet", "list", "unordered", "ul"],
       },
@@ -110,21 +126,11 @@ const COMMANDS: CommandGroup[] = [
             <path fillRule="evenodd" d="M4 4a1 1 0 000 2h.01a1 1 0 000-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1zm-3 5a1 1 0 100 2h.01a1 1 0 100-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1zm-3 5a1 1 0 100 2h.01a1 1 0 100-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1z" clipRule="evenodd" />
           </svg>
         ),
+        type: "lists",
+        value: "bullet",
         iconType: "svg",
         keywords: ["numbered", "list", "ordered", "ol"],
-      },
-      {
-        id: "checklist",
-        label: "Checklist",
-        description: "Actionable to-do list",
-        icon: (
-          <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-          </svg>
-        ),
-        iconType: "svg",
-        keywords: ["check", "todo", "task", "checklist"],
-      },
+      }
     ],
   },
   {
@@ -258,7 +264,7 @@ export default function FloatingMenu({
       } else if (e.key === "Enter") {
         e.preventDefault();
         const selected = flatResults[activeIndex];
-        if (selected) handleSelect(selected.id);
+        if (selected) handleSelect(selected);
       } else if (e.key === "Escape") {
         onClose?.();
       }
@@ -293,11 +299,15 @@ export default function FloatingMenu({
     el?.scrollIntoView({ block: "nearest" });
   }, [activeIndex]);
 
-  const handleSelect = (id: string) => {
-    onSelect?.(id);
+  const handleSelect = (item: any) => {
+    onSelect?.(item.id);
     onClose?.();
-    // In real Lexical usage, dispatch the appropriate command here
-    console.log("Selected command:", id);
+
+    if(!item.type) return;
+
+    if(item.type === "block"){
+      handleHeading(editor, item.value);
+    }
   };
 
   let flatIdx = 0; // track global index across groups
@@ -373,7 +383,7 @@ export default function FloatingMenu({
                     <button
                       key={item.id}
                       data-active={isActive}
-                      onClick={() => handleSelect(item.id)}
+                      onClick={() => handleSelect(item)}
                       onMouseEnter={() => setActiveIndex(currentIdx)}
                       className={`w-full flex items-center gap-3 px-3 py-2 text-left transition-colors ${
                         isActive ? "bg-neutral-100" : "hover:bg-neutral-50"
