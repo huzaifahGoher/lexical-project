@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { ReactNode } from "react";
 import { handleHeading } from "../toolbar/utils/toolbarUtils";
 import { globalConstants } from "@/app/constants/global/globalConstants";
+import { $insertList, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from "@lexical/list";
 
 // ─── Type Definitions ─────────────────────────────────────────────────────────
 
@@ -113,7 +114,7 @@ const COMMANDS: CommandGroup[] = [
           </svg>
         ),
         type: "list",
-        value: "number",
+        value: "bullet",
         iconType: "svg",
         keywords: ["bullet", "list", "unordered", "ul"],
       },
@@ -127,7 +128,7 @@ const COMMANDS: CommandGroup[] = [
           </svg>
         ),
         type: "lists",
-        value: "bullet",
+        value: "number",
         iconType: "svg",
         keywords: ["numbered", "list", "ordered", "ol"],
       }
@@ -300,14 +301,22 @@ export default function FloatingMenu({
   }, [activeIndex]);
 
   const handleSelect = (item: any) => {
-    onSelect?.(item.id);
-    onClose?.();
-
-    if(!item.type) return;
+    const closeEditor = () => {
+      onSelect?.(item.id);
+      onClose?.();
+    }
+    if(!item.type) {
+      closeEditor();
+      return
+    };
 
     if(item.type === "block"){
       handleHeading(editor, item.value);
+    } else if(item.type === "lists"){
+      const command = item.value === "number" ? INSERT_ORDERED_LIST_COMMAND : INSERT_UNORDERED_LIST_COMMAND;
+      editor.dispatchCommand(command, undefined)
     }
+    closeEditor();
   };
 
   let flatIdx = 0; // track global index across groups
