@@ -1,3 +1,4 @@
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { ReactNode } from "react";
 
@@ -218,6 +219,7 @@ export default function FloatingMenu({
   onSelect,
   onClose,
 }: FloatingMenuProps) {
+  const [editor] = useLexicalComposerContext();
   const [query, setQuery] = useState<string>("");
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const menuRef = useRef<HTMLDivElement>(null);
