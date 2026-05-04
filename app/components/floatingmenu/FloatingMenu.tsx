@@ -4,6 +4,8 @@ import { ReactNode } from "react";
 import { handleHeading } from "../toolbar/utils/toolbarUtils";
 import { globalConstants } from "@/app/constants/global/globalConstants";
 import { $insertList, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from "@lexical/list";
+import { $createImageNode } from "@/app/customnodes/utils/customNodeUtils";
+import { $insertNodes } from "lexical";
 
 // ─── Type Definitions ─────────────────────────────────────────────────────────
 
@@ -389,7 +391,30 @@ export default function FloatingMenu({
                   const isActive = activeIndex === currentIdx;
 
                   return (
-                    <button
+                    <div>
+                      {item.id === "image" && (
+                          <input type="file" accept="image/*" onChange={(e)=>{
+                              console.log(e);
+                            const files = e.target.files;
+                            let urls = [];
+                            if(!files) return;
+                            for(const file of files){
+                              console.log(file);
+                              const url = URL.createObjectURL(file);
+                              if(!url) return;
+                              urls.push(url);
+                            }
+                            if(urls.length > 0){
+                              editor.update(()=>{
+                                for (const image of urls){
+                                  const imageNode = $createImageNode(image);
+                                  $insertNodes([imageNode]);
+                                }
+                              })
+                            }
+                          }}/>
+                        )}
+                      <button
                       key={item.id}
                       data-active={isActive}
                       onClick={() => handleSelect(item)}
@@ -439,6 +464,7 @@ export default function FloatingMenu({
                         </svg>
                       )}
                     </button>
+                    </div>
                   );
                 })}
               </div>
