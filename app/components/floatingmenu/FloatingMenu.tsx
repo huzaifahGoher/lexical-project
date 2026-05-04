@@ -127,7 +127,7 @@ const COMMANDS: CommandGroup[] = [
             <path fillRule="evenodd" d="M4 4a1 1 0 000 2h.01a1 1 0 000-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1zm-3 5a1 1 0 100 2h.01a1 1 0 100-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1zm-3 5a1 1 0 100 2h.01a1 1 0 100-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1z" clipRule="evenodd" />
           </svg>
         ),
-        type: "lists",
+        type: "list",
         value: "number",
         iconType: "svg",
         keywords: ["numbered", "list", "ordered", "ol"],
@@ -312,7 +312,7 @@ export default function FloatingMenu({
 
     if(item.type === "block"){
       handleHeading(editor, item.value);
-    } else if(item.type === "lists"){
+    } else if(item.type === "list"){
       const command = item.value === "number" ? INSERT_ORDERED_LIST_COMMAND : INSERT_UNORDERED_LIST_COMMAND;
       editor.dispatchCommand(command, undefined)
     }
