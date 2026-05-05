@@ -6,6 +6,8 @@ import {
   $getNodeByKey,
   $getSelection,
   COMMAND_PRIORITY_LOW,
+  KEY_BACKSPACE_COMMAND,
+  KEY_DELETE_COMMAND,
   SELECTION_CHANGE_COMMAND,
 } from "lexical";
 
@@ -25,6 +27,18 @@ export function ImageNodeDecorator({
   const startPos = useRef({ x: 0, y: 0, width: 0, height: 0 });
 
   useEffect(() => {
+    const removeNode = () => {
+      const selection = $getSelection();
+      if (!selection) return false;
+      const node = $getNodeByKey(nodeKey);
+      if (!node) return false;
+      if (node.isSelected(selection)) {
+        node.remove();
+        return true;
+      }
+      return false;
+    };
+
     editor.registerCommand(
       SELECTION_CHANGE_COMMAND,
       () => {
@@ -35,6 +49,22 @@ export function ImageNodeDecorator({
           setIsSelected(false);
         }
         return false;
+      },
+      COMMAND_PRIORITY_LOW
+    );
+
+    editor.registerCommand(
+      KEY_BACKSPACE_COMMAND,
+      () => {
+        return removeNode();
+      },
+      COMMAND_PRIORITY_LOW
+    );
+
+    editor.registerCommand(
+      KEY_DELETE_COMMAND,
+      () => {
+        return removeNode();
       },
       COMMAND_PRIORITY_LOW
     );
