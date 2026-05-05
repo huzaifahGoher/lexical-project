@@ -29,6 +29,7 @@ import "prismjs/themes/prism.css";
 import CodePlugin from "../plugins/codeplugin/CodePlugin";
 import { ImageNode } from "@/app/customnodes/imagenode/imageNode";
 import ImagePlugin from "../plugins/imageplugin/ImagePlugin";
+import SerializationPlugin from "../plugins/serializationplugin/SerializationPlugin";
 
 const config = {
   namespace: "lexical",
@@ -51,6 +52,8 @@ const config = {
 
 const Editor = () => {
   const onChange = (editorState: EditorState, editor: LexicalEditor) => {
+    const data = editorState.toJSON();
+    sessionStorage.setItem("data", JSON.stringify(data));
     console.log(editorState.toJSON());
   };
 
@@ -71,6 +74,7 @@ const Editor = () => {
           ErrorBoundary={LexicalErrorBoundary}
         />
         <ListPlugin />
+        <SerializationPlugin />
         <TabIndentationPlugin />
         <HistoryPlugin />
         <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
