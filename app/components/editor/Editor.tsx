@@ -30,6 +30,7 @@ import CodePlugin from "../plugins/codeplugin/CodePlugin";
 import { ImageNode } from "@/app/customnodes/imagenode/imageNode";
 import ImagePlugin from "../plugins/imageplugin/ImagePlugin";
 import SerializationPlugin from "../plugins/serializationplugin/SerializationPlugin";
+import StatusBarPlugin from "../plugins/statusbarplugin/StatusBarPlugin";
 
 const config = {
   namespace: "lexical",
@@ -75,6 +76,7 @@ const Editor = () => {
         />
         <ListPlugin />
         <SerializationPlugin />
+        <StatusBarPlugin />
         <TabIndentationPlugin />
         <HistoryPlugin />
         <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
