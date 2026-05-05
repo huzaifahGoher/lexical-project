@@ -3,7 +3,11 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { ReactNode } from "react";
 import { handleHeading } from "../toolbar/utils/toolbarUtils";
 import { globalConstants } from "@/app/constants/global/globalConstants";
-import { $insertList, INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from "@lexical/list";
+import {
+  $insertList,
+  INSERT_ORDERED_LIST_COMMAND,
+  INSERT_UNORDERED_LIST_COMMAND,
+} from "@lexical/list";
 import { $createImageNode } from "@/app/customnodes/utils/customNodeUtils";
 import { $insertNodes } from "lexical";
 
@@ -112,7 +116,11 @@ const COMMANDS: CommandGroup[] = [
         description: "Simple unordered list",
         icon: (
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path fillRule="evenodd" d="M3 5a1 1 0 100 2 1 1 0 000-2zm3 1a1 1 0 011-1h10a1 1 0 110 2H7a1 1 0 01-1-1zm-3 5a1 1 0 100 2 1 1 0 000-2zm3 1a1 1 0 011-1h10a1 1 0 110 2H7a1 1 0 01-1-1zm-3 5a1 1 0 100 2 1 1 0 000-2zm3 1a1 1 0 011-1h10a1 1 0 110 2H7a1 1 0 01-1-1z" clipRule="evenodd" />
+            <path
+              fillRule="evenodd"
+              d="M3 5a1 1 0 100 2 1 1 0 000-2zm3 1a1 1 0 011-1h10a1 1 0 110 2H7a1 1 0 01-1-1zm-3 5a1 1 0 100 2 1 1 0 000-2zm3 1a1 1 0 011-1h10a1 1 0 110 2H7a1 1 0 01-1-1zm-3 5a1 1 0 100 2 1 1 0 000-2zm3 1a1 1 0 011-1h10a1 1 0 110 2H7a1 1 0 01-1-1z"
+              clipRule="evenodd"
+            />
           </svg>
         ),
         type: "list",
@@ -126,14 +134,18 @@ const COMMANDS: CommandGroup[] = [
         description: "Ordered list with numbers",
         icon: (
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path fillRule="evenodd" d="M4 4a1 1 0 000 2h.01a1 1 0 000-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1zm-3 5a1 1 0 100 2h.01a1 1 0 100-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1zm-3 5a1 1 0 100 2h.01a1 1 0 100-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1z" clipRule="evenodd" />
+            <path
+              fillRule="evenodd"
+              d="M4 4a1 1 0 000 2h.01a1 1 0 000-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1zm-3 5a1 1 0 100 2h.01a1 1 0 100-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1zm-3 5a1 1 0 100 2h.01a1 1 0 100-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1z"
+              clipRule="evenodd"
+            />
           </svg>
         ),
         type: "list",
         value: "number",
         iconType: "svg",
         keywords: ["numbered", "list", "ordered", "ol"],
-      }
+      },
     ],
   },
   {
@@ -145,7 +157,11 @@ const COMMANDS: CommandGroup[] = [
         description: "Embed an image from URL or upload",
         icon: (
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+            <path
+              fillRule="evenodd"
+              d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+              clipRule="evenodd"
+            />
           </svg>
         ),
         iconType: "svg",
@@ -157,7 +173,11 @@ const COMMANDS: CommandGroup[] = [
         description: "Syntax-highlighted code snippet",
         icon: (
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+            <path
+              fillRule="evenodd"
+              d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
+              clipRule="evenodd"
+            />
           </svg>
         ),
         iconType: "svg",
@@ -169,7 +189,11 @@ const COMMANDS: CommandGroup[] = [
         description: "Horizontal rule to separate sections",
         icon: (
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+            <path
+              fillRule="evenodd"
+              d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+              clipRule="evenodd"
+            />
           </svg>
         ),
         iconType: "svg",
@@ -181,7 +205,11 @@ const COMMANDS: CommandGroup[] = [
         description: "Insert a structured data table",
         icon: (
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path fillRule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clipRule="evenodd" />
+            <path
+              fillRule="evenodd"
+              d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z"
+              clipRule="evenodd"
+            />
           </svg>
         ),
         iconType: "svg",
@@ -215,7 +243,9 @@ const COMMANDS: CommandGroup[] = [
 ];
 
 // Flatten all items for search
-const ALL_ITEMS: CommandItemWithGroup[] = COMMANDS.flatMap((g) => g.items.map((item) => ({ ...item, group: g.group })));
+const ALL_ITEMS: CommandItemWithGroup[] = COMMANDS.flatMap((g) =>
+  g.items.map((item) => ({ ...item, group: g.group }))
+);
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
@@ -306,23 +336,26 @@ export default function FloatingMenu({
     const closeEditor = () => {
       onSelect?.(item.id);
       onClose?.();
-    }
-    if(item.id === "image"){
+    };
+    if (item.id === "image") {
       const inputElement = document.getElementById("upload-image");
-      if(!inputElement) return;
+      if (!inputElement) return;
       inputElement.click();
       return;
-    } 
-    
-    if(!item.type) {
+    }
+
+    if (!item.type) {
       closeEditor();
-      return
-    };
-    if(item.type === "block"){
+      return;
+    }
+    if (item.type === "block") {
       handleHeading(editor, item.value);
-    } else if(item.type === "list"){
-      const command = item.value === "number" ? INSERT_ORDERED_LIST_COMMAND : INSERT_UNORDERED_LIST_COMMAND;
-      editor.dispatchCommand(command, undefined)
+    } else if (item.type === "list") {
+      const command =
+        item.value === "number"
+          ? INSERT_ORDERED_LIST_COMMAND
+          : INSERT_UNORDERED_LIST_COMMAND;
+      editor.dispatchCommand(command, undefined);
     }
     closeEditor();
   };
@@ -361,7 +394,11 @@ export default function FloatingMenu({
             onClick={() => setQuery("")}
             className="text-neutral-400 hover:text-neutral-600 transition-colors"
           >
-            <svg className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
+            <svg
+              className="w-3.5 h-3.5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
               <path
                 fillRule="evenodd"
                 d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -399,77 +436,84 @@ export default function FloatingMenu({
                   return (
                     <div>
                       {item.id === "image" && (
-                          <input id="upload-image" key={`${item.id}-image`} type="file" accept="image/*" style={{display: "none"}} onChange={(e)=>{
+                        <input
+                          id="upload-image"
+                          key={`${item.id}-image`}
+                          type="file"
+                          accept="image/*"
+                          style={{ display: "none" }}
+                          onChange={(e) => {
                             console.log(e);
                             const files = e.target.files;
-                            let urls = [];
-                            if(!files) return;
-                            for(const file of files){
+                            if (!files) return;
+                            for (const file of files) {
                               console.log(file);
-                              const url = URL.createObjectURL(file);
-                              if(!url) return;
-                              urls.push(url);
-                            }
-                            if(urls.length > 0){
-                              editor.update(()=>{
-                                for (const image of urls){
-                                  const imageNode = $createImageNode(image);
+                              const reader = new FileReader();
+                              reader.onload = () => {
+                                const base64 = reader.result;
+                                if (!base64) return;
+                                editor.update(() => {
+                                  const imageNode = $createImageNode(base64.toString());
                                   $insertNodes([imageNode]);
-                                }
-                              })
+                                });
+                              };
+                              reader.readAsDataURL(file);
                             }
-                          }}/>
-                        )}
+                          }}
+                        />
+                      )}
                       <button
-                      key={item.id}
-                      data-active={isActive}
-                      onClick={() => handleSelect(item)}
-                      onMouseEnter={() => setActiveIndex(currentIdx)}
-                      className={`w-full flex items-center gap-3 px-3 py-2 text-left transition-colors ${
-                        isActive ? "bg-neutral-100" : "hover:bg-neutral-50"
-                      }`}
-                    >
-                      {/* Icon */}
-                      <div
-                        className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-sm font-bold ${
-                          item.isAI
-                            ? "bg-violet-100 text-violet-600"
-                            : "bg-neutral-100 text-neutral-600"
+                        key={item.id}
+                        data-active={isActive}
+                        onClick={() => handleSelect(item)}
+                        onMouseEnter={() => setActiveIndex(currentIdx)}
+                        className={`w-full flex items-center gap-3 px-3 py-2 text-left transition-colors ${
+                          isActive ? "bg-neutral-100" : "hover:bg-neutral-50"
                         }`}
                       >
-                        {item.iconType === "text" ? item.icon : item.icon}
-                      </div>
-
-                      {/* Label + description */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-sm font-medium text-neutral-800 truncate">
-                            {item.label}
-                          </span>
-                          {item.isAI && (
-                            <span className="text-[9px] font-semibold bg-violet-100 text-violet-600 px-1.5 py-0.5 rounded-full tracking-wide">
-                              AI
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-xs text-neutral-400 truncate">{item.description}</p>
-                      </div>
-
-                      {/* Active indicator */}
-                      {isActive && (
-                        <svg
-                          className="w-3.5 h-3.5 text-neutral-400 shrink-0"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
+                        {/* Icon */}
+                        <div
+                          className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-sm font-bold ${
+                            item.isAI
+                              ? "bg-violet-100 text-violet-600"
+                              : "bg-neutral-100 text-neutral-600"
+                          }`}
                         >
-                          <path
-                            fillRule="evenodd"
-                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      )}
-                    </button>
+                          {item.iconType === "text" ? item.icon : item.icon}
+                        </div>
+
+                        {/* Label + description */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-sm font-medium text-neutral-800 truncate">
+                              {item.label}
+                            </span>
+                            {item.isAI && (
+                              <span className="text-[9px] font-semibold bg-violet-100 text-violet-600 px-1.5 py-0.5 rounded-full tracking-wide">
+                                AI
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-neutral-400 truncate">
+                            {item.description}
+                          </p>
+                        </div>
+
+                        {/* Active indicator */}
+                        {isActive && (
+                          <svg
+                            className="w-3.5 h-3.5 text-neutral-400 shrink-0"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        )}
+                      </button>
                     </div>
                   );
                 })}
@@ -482,15 +526,21 @@ export default function FloatingMenu({
       {/* Footer hint */}
       <div className="px-3 py-2 border-t border-neutral-100 flex items-center gap-3 text-[11px] text-neutral-400">
         <span className="flex items-center gap-1">
-          <kbd className="px-1.5 py-0.5 rounded bg-neutral-100 font-mono text-[10px]">↑↓</kbd>
+          <kbd className="px-1.5 py-0.5 rounded bg-neutral-100 font-mono text-[10px]">
+            ↑↓
+          </kbd>
           navigate
         </span>
         <span className="flex items-center gap-1">
-          <kbd className="px-1.5 py-0.5 rounded bg-neutral-100 font-mono text-[10px]">↵</kbd>
+          <kbd className="px-1.5 py-0.5 rounded bg-neutral-100 font-mono text-[10px]">
+            ↵
+          </kbd>
           select
         </span>
         <span className="flex items-center gap-1">
-          <kbd className="px-1.5 py-0.5 rounded bg-neutral-100 font-mono text-[10px]">Esc</kbd>
+          <kbd className="px-1.5 py-0.5 rounded bg-neutral-100 font-mono text-[10px]">
+            Esc
+          </kbd>
           close
         </span>
       </div>
