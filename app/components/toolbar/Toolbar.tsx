@@ -74,8 +74,6 @@ const Toolbar = () => {
           />
         ))}
       </select>
-      <input type="file" accept="image/*" onChange={(e)=>console.log(e)}/>
-
       {showMenu && (
         <FloatingMenu
           position={getCarretPosition(showMenu)}
