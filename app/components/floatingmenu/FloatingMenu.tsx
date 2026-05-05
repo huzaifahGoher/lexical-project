@@ -434,11 +434,10 @@ export default function FloatingMenu({
                   const isActive = activeIndex === currentIdx;
 
                   return (
-                    <div>
+                    <div key={item.id}>
                       {item.id === "image" && (
                         <input
                           id="upload-image"
-                          key={`${item.id}-image`}
                           type="file"
                           accept="image/*"
                           style={{ display: "none" }}
@@ -463,7 +462,6 @@ export default function FloatingMenu({
                         />
                       )}
                       <button
-                        key={item.id}
                         data-active={isActive}
                         onClick={() => handleSelect(item)}
                         onMouseEnter={() => setActiveIndex(currentIdx)}
