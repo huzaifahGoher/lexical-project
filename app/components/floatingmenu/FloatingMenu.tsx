@@ -307,11 +307,17 @@ export default function FloatingMenu({
       onSelect?.(item.id);
       onClose?.();
     }
+    if(item.id === "image"){
+      const inputElement = document.getElementById("upload-image");
+      if(!inputElement) return;
+      inputElement.click();
+      return;
+    } 
+    
     if(!item.type) {
       closeEditor();
       return
     };
-
     if(item.type === "block"){
       handleHeading(editor, item.value);
     } else if(item.type === "list"){
@@ -393,8 +399,8 @@ export default function FloatingMenu({
                   return (
                     <div>
                       {item.id === "image" && (
-                          <input type="file" accept="image/*" onChange={(e)=>{
-                              console.log(e);
+                          <input id="upload-image" key={`${item.id}-image`} type="file" accept="image/*" style={{display: "none"}} onChange={(e)=>{
+                            console.log(e);
                             const files = e.target.files;
                             let urls = [];
                             if(!files) return;
