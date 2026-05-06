@@ -29,6 +29,7 @@ const StatusBarPlugin = () => {
         position: "fixed",
         bottom: "10px",
         right: "5px",
+        padding: "5px",
         display: "flex",
         flexFlow: "row wrap",
         gap: "4px"
