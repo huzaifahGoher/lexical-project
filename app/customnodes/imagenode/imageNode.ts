@@ -16,10 +16,14 @@ import { ImageNodeDecorator } from "./ImageNodeDecorator";
 
 export class ImageNode extends DecoratorNode<JSX.Element> {
   __src: string;
+  __width: number;
+  __height: number;
 
-  constructor(src = "", key?: string) {
+  constructor(src = "", width = 200, height = 150, key?: string) {
     super(key);
     this.__src = src;
+    this.__width = width;
+    this.__height = height;
   }
 
   static getType(): string {
@@ -27,18 +31,18 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   }
 
   static clone(node: ImageNode): LexicalNode {
-    return new ImageNode(node.__src, node.__key);
+    return new ImageNode(node.__src, node.__width, node.__height, node.__key);
   }
 
   exportJSON(): SerializedImageNodeType {
     return {
       ...super.exportJSON(),
-      ...{ src: this.__src },
+      ...{ src: this.__src, width: this.__width, height: this.__height },
     };
   }
 
   static importJSON(serializedNode: SerializedImageNodeType): ImageNode {
-    return $createImageNode(serializedNode.src);
+    return $createImageNode(serializedNode.src, serializedNode.width, serializedNode.height);
   }
 
   setSrc(src: string): void {
@@ -49,6 +53,26 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   getSrc(): string {
     const latest = this.getLatest();
     return latest.__src;
+  }
+
+  setWidth(width: number): void {
+    const writeable = this.getWritable();
+    writeable.__width = width;
+  }
+
+  getWidth(): number {
+    const latest = this.getLatest();
+    return latest.__width;
+  }
+
+  setHeight(height: number): void {
+    const writeable = this.getWritable();
+    writeable.__height = height;
+  }
+
+  getHeight(): number {
+    const latest = this.getLatest();
+    return latest.__height;
   }
 
   createDOM(_config: EditorConfig, _editor: LexicalEditor): HTMLElement {
@@ -62,6 +86,12 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   }
 
   decorate(editor: LexicalEditor, config: EditorConfig): JSX.Element {
-    return React.createElement(ImageNodeDecorator, { node: this.exportJSON(), nodeKey: this.getKey() });
+    return React.createElement(ImageNodeDecorator, { 
+      // editor, 
+      nodeKey: this.getKey(),
+      src: this.__src,
+      width: this.__width,
+      height: this.__height
+    });
   }
 }
