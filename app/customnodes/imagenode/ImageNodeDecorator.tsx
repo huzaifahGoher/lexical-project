@@ -37,11 +37,6 @@ export function ImageNodeDecorator({
   const currentDimensions = useRef(dimensions);
   const aspectRatio = useRef(dimensions.width / dimensions.height);
 
-  // Update ref whenever dimensions change
-  useEffect(() => {
-    currentDimensions.current = dimensions;
-  }, [dimensions]);
-
   useEffect(() => {
     const removeSelectionListener = editor.registerCommand(
       SELECTION_CHANGE_COMMAND,
@@ -124,24 +119,36 @@ export function ImageNodeDecorator({
   ) => {
     const startPos = { x: event.clientX, y: event.clientY };
     const handleMouseMove = (event: MouseEvent) => {
-      console.log("mouse move", event);
       const delta = {
         x: startPos.x - event.clientX,
         y: startPos.y - event.clientY,
       };
-      setDimensions({
+      const newDimension = {
+        width: dimensions.width - delta.x,
+        height: dimensions.height - delta.y,
+      }
+      setDimensions(newDimension);
+      currentDimensions.current = newDimension;
+      console.log({
         width: dimensions.width - delta.x,
         height: dimensions.height - delta.y,
       });
     };
 
     const cleanUp = () => {
+      editor.update(()=>{
+        const node = $getNodeByKey(nodeKey) as ImageNode;
+        if(node){
+          node.setWidth(currentDimensions.current.width);
+          node.setHeight(currentDimensions.current.height);
+        }
+      })
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
 
     const handleMouseUp = (event: MouseEvent) => {
-      console.log("mouse up", event);
+      console.log("mouse up", currentDimensions.current);
       cleanUp();
     };
 
