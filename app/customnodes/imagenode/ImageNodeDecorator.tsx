@@ -69,6 +69,7 @@ export function ImageNodeDecorator({
             const currentNode = $getNodeByKey(nodeKey);
             if (currentNode) {
               currentNode.remove();
+              editor.focus();
             }
           });
           return true;
@@ -86,6 +87,7 @@ export function ImageNodeDecorator({
             const currentNode = $getNodeByKey(nodeKey);
             if (currentNode) {
               currentNode.remove();
+              editor.focus();
             }
           });
           return true;
