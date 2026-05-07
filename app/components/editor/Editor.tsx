@@ -31,6 +31,7 @@ import { ImageNode } from "@/app/customnodes/imagenode/imageNode";
 import ImagePlugin from "../plugins/imageplugin/ImagePlugin";
 import SerializationPlugin from "../plugins/serializationplugin/SerializationPlugin";
 import StatusBarPlugin from "../plugins/statusbarplugin/StatusBarPlugin";
+import { debounce } from "lodash";
 
 const config = {
   namespace: "lexical",
@@ -46,18 +47,18 @@ const config = {
     QuoteNode,
     LinkNode,
     HorizontalRuleNode,
-    ImageNode
+    ImageNode,
   ],
   onError: console.error,
 };
 
-const Editor = () => {
-  const onChange = (editorState: EditorState, editor: LexicalEditor) => {
-    const data = editorState.toJSON();
-    sessionStorage.setItem("data", JSON.stringify(data));
-    console.log(editorState.toJSON());
-  };
+const onChange = debounce((editorState: EditorState, editor: LexicalEditor) => {
+  const data = editorState.toJSON();
+  sessionStorage.setItem("data", JSON.stringify(data));
+  console.log(editorState.toJSON());
+}, 200);
 
+const Editor = () => {
   return (
     <div className="editor-container w-full bg-(--background) text-(--foreground)">
       <LexicalComposer initialConfig={config}>
