@@ -129,10 +129,6 @@ export function ImageNodeDecorator({
       }
       setDimensions(newDimension);
       currentDimensions.current = newDimension;
-      console.log({
-        width: dimensions.width - delta.x,
-        height: dimensions.height - delta.y,
-      });
     };
 
     const cleanUp = () => {
@@ -148,7 +144,6 @@ export function ImageNodeDecorator({
     };
 
     const handleMouseUp = (event: MouseEvent) => {
-      console.log("mouse up", currentDimensions.current);
       cleanUp();
     };
 
