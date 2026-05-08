@@ -442,11 +442,9 @@ export default function FloatingMenu({
                           accept="image/*"
                           style={{ display: "none" }}
                           onChange={(e) => {
-                            console.log(e);
                             const files = e.target.files;
                             if (!files) return;
                             for (const file of files) {
-                              console.log(file);
                               const reader = new FileReader();
                               reader.onload = () => {
                                 const base64 = reader.result;
