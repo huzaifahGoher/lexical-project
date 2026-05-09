@@ -23,7 +23,7 @@ const Toolbar = () => {
   const { showMenu, setShowMenu } = useKeyDownHandler();
 
   return (
-    <div className="max-h-10 flex flex-row flex-1 gap-2 items-center pl-2 border border-(--muted-foreground) rounded-sm bg-(--primary-foreground)">
+    <div className="p-10 max-h-10 flex flex-row flex-1 gap-2 items-center pl-2 border border-(--muted-foreground) rounded-sm bg-(--primary-foreground)">
       {formattingOptions.map((item: any, index: number) => (
         <Button
           key={`${index}-${item.label}`}
