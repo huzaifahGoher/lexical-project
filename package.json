@@ -9,7 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@huzaifah191001/design-library": "^1.0.14",
+    "@huzaifah191001/design-library": "^1.0.15",
     "@lexical/code": "^0.43.0",
     "@lexical/code-prism": "^0.43.0",
     "@lexical/extension": "^0.43.0",
