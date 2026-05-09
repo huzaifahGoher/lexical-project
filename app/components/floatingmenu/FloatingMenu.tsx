@@ -450,7 +450,9 @@ export default function FloatingMenu({
                                 const base64 = reader.result;
                                 if (!base64) return;
                                 editor.update(() => {
-                                  const imageNode = $createImageNode(base64.toString());
+                                  const imageNode = $createImageNode(
+                                    base64.toString()
+                                  );
                                   $insertNodes([imageNode]);
                                 });
                               };
