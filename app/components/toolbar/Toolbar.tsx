@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import { Button } from "@huzaifah191001/design-library";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
+import { Button, Select, useTheme } from "@huzaifah191001/design-library";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND } from "lexical";
 import FloatingMenu from "../floatingmenu/FloatingMenu";
@@ -33,7 +33,7 @@ const Toolbar = () => {
           }}
           title={item.label}
         >
-          <Image width={20} height={20} alt={item.label} src={item.iconSrc}/>
+          <Image width={20} height={20} alt={item.label} src={item.iconSrc} />
         </Button>
       ))}
       {alignmentOptions.map((item: any, index: number) => (
@@ -44,7 +44,7 @@ const Toolbar = () => {
           }}
           title={item.label}
         >
-          <Image width={20} height={20} alt={item.label} src={item.iconSrc}/>
+          <Image width={20} height={20} alt={item.label} src={item.iconSrc} />
         </Button>
       ))}
       {listOptions.map((item: any, index: number) => (
@@ -55,7 +55,7 @@ const Toolbar = () => {
           }}
           title={item.label}
         >
-          <Image width={20} height={20} alt={item.label} src={item.iconSrc}/>
+          <Image width={20} height={20} alt={item.label} src={item.iconSrc} />
         </Button>
       ))}
       {undoRedoOptions.map((item: any, index: number) => (
@@ -66,23 +66,17 @@ const Toolbar = () => {
           }}
           title={item.label}
         >
-          <Image width={20} height={20} alt={item.label} src={item.iconSrc}/>
+          <Image width={20} height={20} alt={item.label} src={item.iconSrc} />
         </Button>
       ))}
       <Button onClick={() => exportMarkDown(editor)}>Export markdown</Button>
-      <select
-        onChange={(event) => {
-          handleHeading(editor, event.target.value);
+      <Select
+        onChange={(value) => {
+          handleHeading(editor, value);
         }}
-      >
-        {blockOptions.map((item: any, index) => (
-          <option
-            key={`${index}-${item.label}`}
-            label={item.label}
-            value={item.value}
-          />
-        ))}
-      </select>
+        options={blockOptions}
+        defaultValue={blockOptions[0]}
+      />
       {showMenu && (
         <FloatingMenu
           position={getCarretPosition(showMenu)}
