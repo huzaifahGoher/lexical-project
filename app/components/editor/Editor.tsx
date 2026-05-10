@@ -60,7 +60,7 @@ const onChange = debounce((editorState: EditorState, editor: LexicalEditor) => {
 
 const Editor = () => {
   return (
-    <div className="editor-container w-full bg-(--background) text-(--foreground)">
+    <div className="editor-container w-full">
       <LexicalComposer initialConfig={config}>
         <Toolbar />
         <RichTextPlugin
