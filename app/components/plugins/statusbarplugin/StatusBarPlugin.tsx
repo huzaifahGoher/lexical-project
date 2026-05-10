@@ -1,6 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { RootState } from "@/lib/store";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { $getRoot, EditorState } from "lexical";
 import Image from "next/image";

@@ -17,6 +17,7 @@ import {
   getCarretPosition,
   handleHeading,
 } from "./utils/toolbarUtils";
+import Image from "next/image";
 
 const Toolbar = () => {
   const [editor] = useLexicalComposerContext();
@@ -30,8 +31,10 @@ const Toolbar = () => {
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, item.dispatchValue);
           }}
-          children={<span>{item.label}</span>}
-        />
+          title={item.label}
+        >
+          <Image width={20} height={20} alt={item.label} src={item.iconSrc}/>
+        </Button>
       ))}
       {alignmentOptions.map((item: any, index: number) => (
         <Button
@@ -39,8 +42,10 @@ const Toolbar = () => {
           onClick={() => {
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, item.dispatchValue);
           }}
-          children={<span>{item.label}</span>}
-        />
+          title={item.label}
+        >
+          <Image width={20} height={20} alt={item.label} src={item.iconSrc}/>
+        </Button>
       ))}
       {listOptions.map((item: any, index: number) => (
         <Button
@@ -48,8 +53,10 @@ const Toolbar = () => {
           onClick={() => {
             editor.dispatchCommand(item.dispatchCommand, undefined);
           }}
-          children={<span>{item.label}</span>}
-        />
+          title={item.label}
+        >
+          <Image width={20} height={20} alt={item.label} src={item.iconSrc}/>
+        </Button>
       ))}
       {undoRedoOptions.map((item: any, index: number) => (
         <Button
@@ -57,8 +64,10 @@ const Toolbar = () => {
           onClick={() => {
             editor.dispatchCommand(item.command, undefined);
           }}
-          children={<span>{item.label}</span>}
-        />
+          title={item.label}
+        >
+          <Image width={20} height={20} alt={item.label} src={item.iconSrc}/>
+        </Button>
       ))}
       <Button onClick={() => exportMarkDown(editor)}>Export markdown</Button>
       <select
