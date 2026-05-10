@@ -1,13 +1,13 @@
 'use client'
-import Editor from "./components/editor/Editor";
-import { ThemeProvider } from "@huzaifah191001/design-library";
+import StoreProvider from "./StoreProvider";
+import Main from "./components/main/Main";
 
 export default function Home() {
+
   return (
-    <ThemeProvider themeType="light">
-      <div className="flex flex-col flex-1 font-sans bg-(--background)">
-        <Editor />
-      </div>
-    </ThemeProvider>
+    <StoreProvider >
+      <Main />
+    </StoreProvider>
+    
   );
 }
