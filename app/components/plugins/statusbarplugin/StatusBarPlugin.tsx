@@ -31,7 +31,7 @@ const StatusBarPlugin = () => {
       style={{
         backgroundColor: "grey",
         width: "200px",
-        height: "100px",
+        height: "200px",
         borderRadius: "5px",
         position: "fixed",
         bottom: "10px",
