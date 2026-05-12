@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { RootState } from "@/lib/store";
+import { useTheme } from "@huzaifah191001/design-library";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { $getRoot, EditorState } from "lexical";
 import Image from "next/image";
@@ -7,6 +8,7 @@ import React, { useState } from "react";
 
 const StatusBarPlugin = () => {
   const dispatch = useAppDispatch();
+  const themeStyles = useTheme();
   const theme = useAppSelector((state: RootState) => state.themeObject.theme);
   const [data, setData] = useState({
     wordCount: 0,
@@ -29,10 +31,11 @@ const StatusBarPlugin = () => {
   return (
     <div
       style={{
-        backgroundColor: "grey",
+        backgroundColor: themeStyles.colors.bg,
         width: "200px",
         height: "200px",
         borderRadius: "5px",
+        border: `1px solid ${themeStyles.colors.border}`,
         position: "fixed",
         bottom: "10px",
         right: "5px",
