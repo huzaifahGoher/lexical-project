@@ -45,20 +45,28 @@ const StatusBarPlugin = () => {
         gap: "4px",
       }}
     >
-      <span>{theme} Theme: </span>
-      <Image
-        style={{ cursor: "pointer" }}
-        onClick={() => {
-          dispatch({
-            type: "theme/setTheme",
-            payload: `${theme === "light" ? "dark" : "light"}`,
-          });
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
         }}
-        width={20}
-        height={20}
-        alt=""
-        src={theme === "light" ? "./light-theme.svg" : "./dark-theme.svg"}
-      />
+      >
+        <span>{theme} Theme: </span>
+        <Image
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            dispatch({
+              type: "theme/setTheme",
+              payload: `${theme === "light" ? "dark" : "light"}`,
+            });
+          }}
+          width={15}
+          height={15}
+          alt=""
+          src={theme === "dark" ? "./light-theme.svg" : "./dark-theme.svg"}
+        />
+      </div>
       <span>Word Count: </span>
       <span>{data.wordCount}</span>
       <span>Character Count: </span>
