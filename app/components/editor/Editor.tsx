@@ -32,6 +32,8 @@ import ImagePlugin from "../plugins/imageplugin/ImagePlugin";
 import SerializationPlugin from "../plugins/serializationplugin/SerializationPlugin";
 import StatusBarPlugin from "../plugins/statusbarplugin/StatusBarPlugin";
 import { debounce } from "lodash";
+import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
+import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 
 const config = {
   namespace: "lexical",
@@ -48,6 +50,9 @@ const config = {
     LinkNode,
     HorizontalRuleNode,
     ImageNode,
+    TableNode,
+    TableCellNode,
+    TableRowNode,
   ],
   onError: console.error,
 };
@@ -83,6 +88,7 @@ const Editor = () => {
         <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
         <CodePlugin />
         <ImagePlugin />
+        <TablePlugin />
         <OnChangePlugin onChange={onChange} />
       </LexicalComposer>
     </div>

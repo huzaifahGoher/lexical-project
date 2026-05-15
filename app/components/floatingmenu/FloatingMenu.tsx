@@ -9,7 +9,14 @@ import {
   INSERT_UNORDERED_LIST_COMMAND,
 } from "@lexical/list";
 import { $createImageNode } from "@/app/customnodes/utils/customNodeUtils";
-import { $insertNodes } from "lexical";
+import {
+  $insertNodes,
+  ElementFormatType,
+  FORMAT_TEXT_COMMAND,
+  TextFormatType,
+} from "lexical";
+import { formattingOptions } from "../toolbar/constants/toolbarConstant";
+import { $createTableNode, INSERT_TABLE_COMMAND } from "@lexical/table";
 
 // ─── Type Definitions ─────────────────────────────────────────────────────────
 
@@ -170,6 +177,8 @@ const COMMANDS: CommandGroup[] = [
       {
         id: "code",
         label: "Code Block",
+        type: "text",
+        value: "code",
         description: "Syntax-highlighted code snippet",
         icon: (
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
@@ -184,24 +193,9 @@ const COMMANDS: CommandGroup[] = [
         keywords: ["code", "snippet", "block", "pre", "syntax"],
       },
       {
-        id: "divider",
-        label: "Divider",
-        description: "Horizontal rule to separate sections",
-        icon: (
-          <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path
-              fillRule="evenodd"
-              d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-              clipRule="evenodd"
-            />
-          </svg>
-        ),
-        iconType: "svg",
-        keywords: ["divider", "hr", "rule", "separator", "line"],
-      },
-      {
         id: "table",
         label: "Table",
+        type: "table",
         description: "Insert a structured data table",
         icon: (
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
@@ -217,29 +211,29 @@ const COMMANDS: CommandGroup[] = [
       },
     ],
   },
-  {
-    group: "AI",
-    items: [
-      {
-        id: "ai-rewrite",
-        label: "AI Rewrite",
-        description: "Improve selected text with AI",
-        icon: "✦",
-        iconType: "text",
-        keywords: ["ai", "rewrite", "improve", "gpt", "claude", "generate"],
-        isAI: true,
-      },
-      {
-        id: "ai-summarize",
-        label: "AI Summarize",
-        description: "Summarize selected content",
-        icon: "✦",
-        iconType: "text",
-        keywords: ["ai", "summarize", "summary", "shorten"],
-        isAI: true,
-      },
-    ],
-  },
+  // {
+  //   group: "AI",
+  //   items: [
+  //     {
+  //       id: "ai-rewrite",
+  //       label: "AI Rewrite",
+  //       description: "Improve selected text with AI",
+  //       icon: "✦",
+  //       iconType: "text",
+  //       keywords: ["ai", "rewrite", "improve", "gpt", "claude", "generate"],
+  //       isAI: true,
+  //     },
+  //     {
+  //       id: "ai-summarize",
+  //       label: "AI Summarize",
+  //       description: "Summarize selected content",
+  //       icon: "✦",
+  //       iconType: "text",
+  //       keywords: ["ai", "summarize", "summary", "shorten"],
+  //       isAI: true,
+  //     },
+  //   ],
+  // },
 ];
 
 // Flatten all items for search
@@ -356,6 +350,13 @@ export default function FloatingMenu({
           ? INSERT_ORDERED_LIST_COMMAND
           : INSERT_UNORDERED_LIST_COMMAND;
       editor.dispatchCommand(command, undefined);
+    } else if (item.type === "text") {
+      editor.dispatchCommand(FORMAT_TEXT_COMMAND, item.value as TextFormatType);
+    } else if (item.type === "table") {
+      editor.update(()=>{
+        const tableNode = $createTableNode();
+        $insertNodes([tableNode]);;
+      })
     }
     closeEditor();
   };
