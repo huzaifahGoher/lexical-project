@@ -67,4 +67,14 @@ export const exampleTheme = {
     url: 'editor-tokenOperator',
     variable: 'editor-tokenVariable',
   },
+  table: 'ExampleEditorTheme__table',
+  tableCell: 'ExampleEditorTheme__tableCell',
+  tableCellActionButton: 'ExampleEditorTheme__tableCellActionButton',
+  tableCellActionButtonContainer:
+    'ExampleEditorTheme__tableCellActionButtonContainer',
+  tableCellHeader: 'ExampleEditorTheme__tableCellHeader',
+  tableCellResizer: 'ExampleEditorTheme__tableCellResizer',
+  tableCellSelected: 'ExampleEditorTheme__tableCellSelected',
+  tableSelected: 'ExampleEditorTheme__tableSelected',
+  tableSelection: 'ExampleEditorTheme__tableSelection',
 };
