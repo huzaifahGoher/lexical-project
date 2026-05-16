@@ -1,12 +1,33 @@
-import { LexicalNode } from "lexical";
 import { ImageNode } from "../imagenode/imageNode";
+import { CustomTableNode, CustomTableRowNode, CustomTableCellNode } from "../tablenode/tableNode";
+import { TableCellHeaderStates } from "@lexical/table";
 
-const $createImageNode = (src: string, width?: number, height?: number) : ImageNode => {
+const $createImageNode = (src: string, width?: number, height?: number): ImageNode => {
     return new ImageNode(src, width, height);
 }
 
-const $isImageNode = (node: any) : boolean => {
+const $isImageNode = (node: any): boolean => {
     return node instanceof ImageNode;
 }
 
-export {$createImageNode, $isImageNode};
+const $createCustomTableNode = (): CustomTableNode => {
+    return new CustomTableNode();
+}
+
+const $createCustomTableRowNode = (): CustomTableRowNode => {
+    return new CustomTableRowNode();
+}
+
+const $createCustomTableCellNode = (headerState = TableCellHeaderStates.NO_STATUS): CustomTableCellNode => {
+    return new CustomTableCellNode(headerState);
+}
+
+const $isCustomTableNode = (node: any): boolean => node instanceof CustomTableNode;
+const $isCustomTableRowNode = (node: any): boolean => node instanceof CustomTableRowNode;
+const $isCustomTableCellNode = (node: any): boolean => node instanceof CustomTableCellNode;
+
+export {
+    $createImageNode, $isImageNode,
+    $createCustomTableNode, $createCustomTableRowNode, $createCustomTableCellNode,
+    $isCustomTableNode, $isCustomTableRowNode, $isCustomTableCellNode
+};
