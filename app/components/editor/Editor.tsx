@@ -34,6 +34,12 @@ import StatusBarPlugin from "../plugins/statusbarplugin/StatusBarPlugin";
 import { debounce } from "lodash";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
+import {
+  CustomTableCellNode,
+  CustomTableNode,
+  CustomTableRowNode,
+} from "@/app/customnodes/tablenode/tableNode";
+import { $createCustomTableCellNode, $createCustomTableNode, $createCustomTableRowNode } from "@/app/customnodes/utils/customNodeUtils";
 
 const config = {
   namespace: "lexical",
@@ -50,9 +56,30 @@ const config = {
     LinkNode,
     HorizontalRuleNode,
     ImageNode,
-    TableNode,
-    TableCellNode,
-    TableRowNode,
+    {
+      replace: TableNode,
+      with: (node: TableNode) => {
+        return $createCustomTableNode();
+      },
+      withKlass: CustomTableNode,
+    },
+    CustomTableNode,
+    {
+      replace: TableCellNode,
+      with: (node: TableCellNode) => {
+        return $createCustomTableCellNode();
+      },
+      withKlass: CustomTableCellNode,
+    },
+    CustomTableCellNode,
+    {
+      replace: TableRowNode,
+      with: (node: TableRowNode) => {
+        return $createCustomTableRowNode();
+      },
+      withKlass: CustomTableRowNode,
+    },
+    CustomTableRowNode,
   ],
   onError: console.error,
 };
