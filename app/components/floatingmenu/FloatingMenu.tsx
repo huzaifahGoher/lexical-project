@@ -354,8 +354,7 @@ export default function FloatingMenu({
       editor.dispatchCommand(FORMAT_TEXT_COMMAND, item.value as TextFormatType);
     } else if (item.type === "table") {
       editor.update(()=>{
-        const tableNode = $createTableNode();
-        $insertNodes([tableNode]);;
+        editor.dispatchCommand(INSERT_TABLE_COMMAND, {rows: String(5), columns: String(5)});
       })
     }
     closeEditor();
