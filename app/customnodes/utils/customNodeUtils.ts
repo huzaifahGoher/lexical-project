@@ -1,4 +1,5 @@
 import { ImageNode } from "../imagenode/imageNode";
+import { CustomLinkNode } from "../linknode/linkNode";
 import { CustomTableNode, CustomTableRowNode, CustomTableCellNode } from "../tablenode/tableNode";
 import { TableCellHeaderStates } from "@lexical/table";
 
@@ -26,8 +27,17 @@ const $isCustomTableNode = (node: any): boolean => node instanceof CustomTableNo
 const $isCustomTableRowNode = (node: any): boolean => node instanceof CustomTableRowNode;
 const $isCustomTableCellNode = (node: any): boolean => node instanceof CustomTableCellNode;
 
+const $createCustomLinkNode = (href: string): CustomLinkNode => {
+    return new CustomLinkNode(href);
+}
+
+const $isCustomLinkNode = (node: any): boolean => {
+    return node instanceof CustomLinkNode;
+}
+
 export {
     $createImageNode, $isImageNode,
     $createCustomTableNode, $createCustomTableRowNode, $createCustomTableCellNode,
-    $isCustomTableNode, $isCustomTableRowNode, $isCustomTableCellNode
+    $isCustomTableNode, $isCustomTableRowNode, $isCustomTableCellNode,
+    $createCustomLinkNode, $isCustomLinkNode
 };

@@ -6,5 +6,8 @@ export const customNodesConstants = {
         TYPE: "tableNode",
         ROW_TYPE: "tableRowNode",
         CELL_TYPE: "tableCellNode"
+    },
+    LINK: {
+        TYPE: "customLinkNode"
     }
 }
