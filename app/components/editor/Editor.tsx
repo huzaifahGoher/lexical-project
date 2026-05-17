@@ -31,6 +31,7 @@ import { ImageNode } from "@/app/customnodes/imagenode/imageNode";
 import ImagePlugin from "../plugins/imageplugin/ImagePlugin";
 import SerializationPlugin from "../plugins/serializationplugin/SerializationPlugin";
 import StatusBarPlugin from "../plugins/statusbarplugin/StatusBarPlugin";
+import TableDecoratorPlugin from "../plugins/tabledecoratorplugin/TableDecoratorPlugin";
 import { debounce } from "lodash";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
@@ -116,6 +117,7 @@ const Editor = () => {
         <CodePlugin />
         <ImagePlugin />
         <TablePlugin />
+        <TableDecoratorPlugin />
         <OnChangePlugin onChange={onChange} />
       </LexicalComposer>
     </div>
