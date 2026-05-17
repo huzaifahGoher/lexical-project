@@ -151,7 +151,9 @@ export class CustomLinkNode extends DecoratorNode<JSX.Element | null> {
     anchor.style.backgroundColor = "#e0f2fe";
     anchor.style.border = "1px solid #7dd3fc";
     anchor.style.borderRadius = "4px";
-    anchor.style.padding = "2px 6px";
+    anchor.style.padding = "2px 0";
+    anchor.style.marginLeft = "2px";
+    anchor.style.marginRight = "2px";
 
     return anchor;
   }
