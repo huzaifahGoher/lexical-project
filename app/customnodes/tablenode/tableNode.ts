@@ -10,16 +10,50 @@ import { EditorConfig, LexicalEditor } from "lexical";
 // ─── Table ───────────────────────────────────────────────────────────────────
 
 export class CustomTableNode extends TableNode {
+  __width: number | null;
+  __height: number | null;
+
+  constructor(width?: number | null, height?: number | null, key?: string) {
+    super(key);
+    this.__width = width ?? null;
+    this.__height = height ?? null;
+  }
+
   static getType(): string {
     return customNodesConstants.TABLE.TYPE;
   }
 
   static clone(node: CustomTableNode): CustomTableNode {
-    return new CustomTableNode(node.__key);
+    return new CustomTableNode(node.__width, node.__height, node.__key);
+  }
+
+  getWidth(): number | null {
+    const latest = this.getLatest();
+    return latest.__width;
+  }
+
+  setWidth(width: number | null): void {
+    const writable = this.getWritable();
+    writable.__width = width;
+  }
+
+  getHeight(): number | null {
+    const latest = this.getLatest();
+    return latest.__height;
+  }
+
+  setHeight(height: number | null): void {
+    const writable = this.getWritable();
+    writable.__height = height;
   }
 
   exportJSON(): SerializedTableNodeType {
-    return { ...super.exportJSON(), type: customNodesConstants.TABLE.TYPE };
+    return {
+      ...super.exportJSON(),
+      type: customNodesConstants.TABLE.TYPE,
+      width: this.__width,
+      height: this.__height,
+    };
   }
 
   createDOM(config: EditorConfig, editor?: LexicalEditor): HTMLElement {
@@ -27,7 +61,10 @@ export class CustomTableNode extends TableNode {
   }
 
   static importJSON(serializedNode: SerializedTableNodeType): CustomTableNode {
-    return new CustomTableNode();
+    return new CustomTableNode(
+      serializedNode.width ?? null,
+      serializedNode.height ?? null
+    );
   }
 }
 

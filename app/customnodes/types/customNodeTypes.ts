@@ -11,8 +11,13 @@ type SerializedImageNodeType = Spread<
   SerializedLexicalNode,
   { src: string; width?: number; height?: number }
 >;
-type SerializedTableNodeType = Spread<SerializedTableNode, {}>;
+type SerializedTableNodeType = Spread<SerializedTableNode, {
+  width?: number | null;
+  height?: number | null;
+}>;
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type SerializedTableRowNodeType = Spread<SerializedTableRowNode, {}>;
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type SerializedTableCellNodeType = Spread<SerializedTableCellNode, {}>;
 
 export type {
