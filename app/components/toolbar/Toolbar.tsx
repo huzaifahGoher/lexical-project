@@ -1,8 +1,9 @@
 "use client";
-import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { Button, Select, useTheme } from "@huzaifah191001/design-library";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND } from "lexical";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import FloatingMenu from "../floatingmenu/FloatingMenu";
 import useKeyDownHandler from "./hooks/useKeyDownHandler";
 import {
@@ -22,6 +23,12 @@ import Image from "next/image";
 const Toolbar = () => {
   const [editor] = useLexicalComposerContext();
   const { showMenu, setShowMenu } = useKeyDownHandler();
+  const theme = useTheme();
+  const pathname = usePathname();
+
+  const isCollaborationPage = pathname === "/collaboration";
+  const switchHref = isCollaborationPage ? "/" : "/collaboration";
+  const switchLabel = isCollaborationPage ? "Solo Editor" : "Collaborate";
 
   return (
     <div className="p-7 max-h-10 flex flex-row flex-1 gap-2 items-center pl-2 border border-(--muted-foreground) rounded-sm ">
@@ -77,6 +84,22 @@ const Toolbar = () => {
         options={blockOptions}
         defaultValue={blockOptions[0]}
       />
+
+      <div className="ml-auto">
+        <Link href={switchHref} title={switchLabel} style={{ textDecoration: "none" }}>
+          <Button variant="filled" style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: theme.fontSizes.sm }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              width={14}
+              height={14}
+              alt={switchLabel}
+              src={isCollaborationPage ? "/collaboration/solo-user.svg" : "/collaboration/collaborate.svg"}
+            />
+            {switchLabel}
+          </Button>
+        </Link>
+      </div>
+
       {showMenu && (
         <FloatingMenu
           position={getCarretPosition(showMenu)}
