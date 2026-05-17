@@ -1,0 +1,52 @@
+/* Skeleton loading animation */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* Focus styles for interactive elements within the link preview card */
+[data-testid="link-preview-card"] button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+[data-testid="link-preview-card"] input:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 0;
+  border-color: currentColor;
+}
+
+[data-testid="link-preview-card"] input[type="checkbox"]:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Thumbnail image container with 16:9 aspect ratio */
+.link-preview-thumbnail {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+  overflow: hidden;
+}
+
+.link-preview-thumbnail img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Description line clamping utility */
+.link-preview-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
