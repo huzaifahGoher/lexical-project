@@ -57,7 +57,34 @@ export class CustomTableNode extends TableNode {
   }
 
   createDOM(config: EditorConfig, editor?: LexicalEditor): HTMLElement {
-    return super.createDOM(config, editor);
+    const element = super.createDOM(config, editor);
+    // Apply persisted dimensions directly on DOM creation so they survive
+    if (this.__width !== null) {
+      element.style.setProperty("width", `${this.__width}px`, "important");
+    }
+    if (this.__height !== null) {
+      element.style.setProperty("height", `${this.__height}px`, "important");
+    }
+    return element;
+  }
+
+  updateDOM(prevNode: CustomTableNode, dom: HTMLElement): boolean {
+    // Apply dimensions if they changed
+    if (this.__width !== prevNode.__width) {
+      if (this.__width !== null) {
+        dom.style.setProperty("width", `${this.__width}px`, "important");
+      } else {
+        dom.style.removeProperty("width");
+      }
+    }
+    if (this.__height !== prevNode.__height) {
+      if (this.__height !== null) {
+        dom.style.setProperty("height", `${this.__height}px`, "important");
+      } else {
+        dom.style.removeProperty("height");
+      }
+    }
+    return false;
   }
 
   static importJSON(serializedNode: SerializedTableNodeType): CustomTableNode {
