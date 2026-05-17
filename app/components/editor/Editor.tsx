@@ -32,6 +32,8 @@ import ImagePlugin from "../plugins/imageplugin/ImagePlugin";
 import SerializationPlugin from "../plugins/serializationplugin/SerializationPlugin";
 import StatusBarPlugin from "../plugins/statusbarplugin/StatusBarPlugin";
 import TableDecoratorPlugin from "../plugins/tabledecoratorplugin/TableDecoratorPlugin";
+import HoverCardPlugin from "../plugins/hovercardplugin/HoverCardPlugin";
+import { CustomLinkNode } from "@/app/customnodes/linknode/linkNode";
 import { debounce } from "lodash";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
@@ -57,6 +59,7 @@ const config = {
     LinkNode,
     HorizontalRuleNode,
     ImageNode,
+    CustomLinkNode,
     {
       replace: TableNode,
       with: (node: TableNode) => {
@@ -116,6 +119,7 @@ const Editor = () => {
         <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
         <CodePlugin />
         <ImagePlugin />
+        <HoverCardPlugin />
         <TablePlugin />
         <TableDecoratorPlugin />
         <OnChangePlugin onChange={onChange} />
