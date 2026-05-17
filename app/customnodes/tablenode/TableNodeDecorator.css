@@ -1,0 +1,134 @@
+.table-decorator-overlay {
+  position: fixed;
+  pointer-events: none;
+  z-index: 5;
+  box-sizing: border-box;
+}
+
+.table-decorator-overlay.selected {
+  border: 2px solid var(--table-decorator-accent-color, #007acc);
+  border-radius: 4px;
+}
+
+.table-decorator-overlay .selection-click-area {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Four border strips around the table that are clickable for selection.
+   These cover only the 10px margin outside the table, not the table itself. */
+.table-decorator-overlay .selection-click-area-top,
+.table-decorator-overlay .selection-click-area-bottom,
+.table-decorator-overlay .selection-click-area-left,
+.table-decorator-overlay .selection-click-area-right {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.table-decorator-overlay .selection-click-area-top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+}
+
+.table-decorator-overlay .selection-click-area-bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+}
+
+.table-decorator-overlay .selection-click-area-left {
+  top: 10px;
+  left: 0;
+  width: 10px;
+  bottom: 10px;
+}
+
+.table-decorator-overlay .selection-click-area-right {
+  top: 10px;
+  right: 0;
+  width: 10px;
+  bottom: 10px;
+}
+
+/* Resize handle at bottom-right corner */
+.table-resize-handle {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 10px;
+  height: 10px;
+  background: var(--table-decorator-primary-color, #007acc);
+  border: 1px solid var(--table-decorator-foreground-color, #ffffff);
+  border-radius: 50%;
+  cursor: se-resize;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.table-resize-handle:hover {
+  transform: scale(1.3);
+}
+
+/* Insertion button for column/row insertion */
+.table-insertion-button {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 15;
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s ease;
+}
+
+.table-insertion-button:hover {
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* Removal button for column/row deletion */
+.table-removal-button {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 15;
+  padding: 0;
+  background-color: #e53e3e;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s ease, background-color 0.1s ease;
+}
+
+.table-removal-button:hover {
+  transform: translate(-50%, -50%) scale(1.2);
+  background-color: #c53030;
+}
