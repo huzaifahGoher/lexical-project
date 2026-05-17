@@ -76,7 +76,7 @@ const Toolbar = () => {
           <Image width={20} height={20} alt={item.label} src={item.iconSrc} />
         </Button>
       ))}
-      <Button onClick={() => exportMarkDown(editor)}>Export markdown</Button>
+      <Button onClick={() => exportMarkDown(editor)}>Markdown</Button>
       <Select
         onChange={(value) => {
           handleHeading(editor, value);

@@ -248,9 +248,11 @@ export default function FloatingMenu({
     return () => document.removeEventListener("mousedown", handler);
   }, [onClose]);
 
-  // Focus input on mount
+  // Focus input on mount (delayed to avoid capturing the triggering "/" keystroke)
   useEffect(() => {
-    inputRef.current?.focus();
+    requestAnimationFrame(() => {
+      inputRef.current?.focus();
+    });
   }, []);
 
   // Scroll active item into view
