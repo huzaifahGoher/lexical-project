@@ -19,7 +19,7 @@ import { Level } from 'level';
 
 // --- Configuration ---
 
-const HOST = process.env.HOST || 'localhost';
+const HOST = process.env.HOST || '0.0.0.0';
 const PORT = parseInt(process.env.PORT || '1234', 10);
 const PERSISTENCE_DIR = process.env.PERSISTENCE_DIR || './yjs-wss-db';
 

@@ -1,0 +1,20 @@
+{
+  "name": "lexical-collab-server",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "tsx collaboration-server.ts"
+  },
+  "dependencies": {
+    "ws": "^8.20.1",
+    "yjs": "^13.6.30",
+    "y-protocols": "^1.0.0",
+    "lib0": "^0.2.0",
+    "level": "^10.0.0",
+    "tsx": "^4.22.1",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

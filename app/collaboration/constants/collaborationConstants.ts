@@ -19,7 +19,7 @@ export const COLLABORATION_COLORS: Array<{ color: string; colorLight: string }> 
 ];
 
 /** Default WebSocket server URL for the y-websocket collaboration server */
-export const DEFAULT_WEBSOCKET_URL = 'ws://localhost:1234';
+export const DEFAULT_WEBSOCKET_URL = process.env.NEXT_PUBLIC_WEBSOCKET_URL || 'ws://localhost:1234';
 
 /** Default room identifier for the shared collaboration session */
 export const DEFAULT_ROOM_ID = 'default-room';
