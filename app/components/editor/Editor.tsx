@@ -105,7 +105,7 @@ const Editor = () => {
               className="flex-1 outline-none"
               aria-placeholder={"Enter some text..."}
               placeholder={
-                <div className="text-gray-400 mt-10">write text here</div>
+                <div className="text-gray-400 mt-15">write text here</div>
               }
             />
           }
