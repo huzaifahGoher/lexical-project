@@ -8,6 +8,7 @@
  * If the URL already has http:// or https://, it is returned unchanged.
  */
 export function normalizeUrl(input: string): string {
+  if (!input) return '';
   const trimmed = input.trim();
   if (/^https?:\/\//i.test(trimmed)) {
     return trimmed;
