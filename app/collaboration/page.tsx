@@ -35,7 +35,7 @@ function CollaborationHeader() {
   return (
     <div className="flex flex-col shrink-0">
       {error && (
-        <div className="flex items-center justify-between px-4 py-2 border-b text-sm" role="alert"
+        <div className="flex items-center justify-between px-2 py-2 border-b text-sm" role="alert"
           style={{ backgroundColor: theme.colors.bgDanger, borderColor: theme.colors.borderDanger, color: theme.colors.textDanger }}
         >
           <span>{error}</span>
@@ -49,7 +49,7 @@ function CollaborationHeader() {
         </div>
       )}
       {!error && connectionStatus === 'offline' && (
-        <div className="flex items-center justify-between px-4 py-2 border-b text-sm" role="status"
+        <div className="flex items-center justify-between px-2 py-2 border-b text-sm" role="status"
           style={{ backgroundColor: theme.colors.bgChecked, borderColor: theme.colors.borderChecked, color: theme.colors.actionText }}
         >
           <span>You are offline. Local edits will sync when reconnected.</span>
@@ -62,7 +62,7 @@ function CollaborationHeader() {
           </Button>
         </div>
       )}
-      <div className="flex items-center justify-between px-4 py-2 border-b border-gray-200">
+      <div className="flex items-center justify-between px-2 py-2 border-b border-gray-200">
         <PresenceAvatarBar users={connectedUsers} localUser={localUser} />
         <div className="flex items-center gap-3">
           <ConnectionStatusIndicator status={connectionStatus} />

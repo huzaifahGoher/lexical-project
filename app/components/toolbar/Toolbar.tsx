@@ -31,7 +31,7 @@ const Toolbar = () => {
   const switchLabel = isCollaborationPage ? "Solo Editor" : "Collaborate";
 
   return (
-    <div className="p-7 max-h-10 flex flex-row flex-1 gap-2 items-center pl-2 border border-(--muted-foreground) rounded-sm ">
+    <div className="p-7 max-h-10 flex flex-row flex-1 gap-2 items-center pl-2 rounded-sm " style={{border: `1px solid ${theme.colors.borderStrong}`}}>
       {formattingOptions.map((item: any, index: number) => (
         <Button
           key={`${index}-${item.label}`}

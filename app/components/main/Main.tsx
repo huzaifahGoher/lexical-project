@@ -24,7 +24,7 @@ const Main = () => {
   return (
     <ThemeProvider themeType={themeType}>
       <div
-        className="p-2 flex flex-col flex-1 font-sans rounded-sm"
+        className="p-2 flex flex-col flex-1 font-sans"
         style={{ backgroundColor: theme.colors.bg, color: theme.colors.text }}
       >
         <Editor />
