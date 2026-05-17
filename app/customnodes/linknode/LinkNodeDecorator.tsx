@@ -4,6 +4,7 @@ import "./LinkNodeDecorator.css";
 import { LinkPreviewCard } from "./components/LinkPreviewCard";
 import { $isCustomLinkNode } from "./linkNode";
 import { FetchStatus, PreviewMetadata } from "./types/linkNodeTypes";
+import { useLinkNodeSelection } from "./hooks/useLinkNodeSelection";
 
 const HOVER_SHOW_DELAY = 150; // ms before showing card
 const HOVER_HIDE_GRACE = 100; // ms grace period before closing
@@ -31,6 +32,9 @@ export function LinkNodeDecorator({
   const showTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const anchorElementRef = useRef<HTMLElement | null>(null);
+
+  // Selection tracking + visual highlight + delete/backspace
+  useLinkNodeSelection({ nodeKey, editor });
 
   // Read node data from editor state
   const readNodeData = useCallback(() => {
