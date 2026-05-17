@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { $getNodeByKey, $createTextNode, LexicalEditor } from "lexical";
 import { Button, Checkbox, useTheme } from "@huzaifah191001/design-library";
 import { isValidUrl } from "../utils/linkNodeUtils";
@@ -31,18 +31,6 @@ export function EditingControls({
   const borderColor = themeStyles?.colors?.border ?? "#e0e0e0";
   const textColor = themeStyles?.colors?.text ?? "#1a1a1a";
   const textSubtleColor = themeStyles?.colors?.textSubtle ?? "#666666";
-
-  // Button styles
-  const greenBtnStyle = {
-    background: themeStyles?.colors?.bgChecked ?? "#F0FDF4",
-    color: themeStyles?.colors?.actionText ?? "#166534",
-    borderColor: themeStyles?.colors?.borderChecked ?? "#BBF7D0",
-  };
-  const redBtnStyle = {
-    background: "#FEF2F2",
-    color: "#DC2626",
-    borderColor: "#FECACA",
-  };
 
   if (!editor.isEditable()) {
     return null;
@@ -140,22 +128,22 @@ export function EditingControls({
 
       {/* Action buttons */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "10px" }}>
-        <Button onClick={handleOpenLink} title="Open link in browser" style={greenBtnStyle}>
+        <Button onClick={handleOpenLink} title="Open link in browser" variant="subtle">
           Open
         </Button>
-        <Button onClick={handleCopyUrl} title="Copy URL to clipboard" style={greenBtnStyle}>
+        <Button onClick={handleCopyUrl} title="Copy URL to clipboard" variant="subtle">
           Copy
         </Button>
-        <Button onClick={onRefresh} title="Refresh preview" style={greenBtnStyle}>
+        <Button onClick={onRefresh} title="Refresh preview" variant="subtle">
           Refresh
         </Button>
-        <Button onClick={handleSave} title="Save changes" style={greenBtnStyle}>
+        <Button onClick={handleSave} title="Save changes" variant="subtle">
           Save
         </Button>
-        <Button onClick={handleUnlink} title="Remove link" style={redBtnStyle}>
+        <Button onClick={handleUnlink} title="Remove link" variant="danger">
           Unlink
         </Button>
-        <Button onClick={handleCancel} title="Cancel edits" style={redBtnStyle}>
+        <Button onClick={handleCancel} title="Cancel edits" variant="danger">
           Cancel
         </Button>
       </div>
