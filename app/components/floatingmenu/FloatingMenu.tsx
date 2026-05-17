@@ -1,6 +1,5 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { ReactNode } from "react";
 import { handleHeading } from "../toolbar/utils/toolbarUtils";
 import { globalConstants } from "@/app/constants/global/globalConstants";
 import {
@@ -17,6 +16,7 @@ import {
 } from "lexical";
 import { formattingOptions } from "../toolbar/constants/toolbarConstant";
 import { $createTableNode, INSERT_TABLE_COMMAND } from "@lexical/table";
+import Image from "next/image";
 
 // ─── Type Definitions ─────────────────────────────────────────────────────────
 
@@ -24,8 +24,8 @@ interface CommandItem {
   id: string;
   label: string;
   description: string;
-  icon: string | ReactNode;
-  iconType: "text" | "svg";
+  icon: string;
+  iconType: "text" | "img";
   keywords: string[];
   type?: string;
   value?: string;
@@ -102,14 +102,10 @@ const COMMANDS: CommandGroup[] = [
         id: "blockquote",
         label: "Blockquote",
         description: "Highlight a quote or callout",
-        icon: (
-          <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path d="M6 4a1 1 0 00-1 1v4a1 1 0 001 1h2.5l-1 2H6a1 1 0 000 2h2a1 1 0 00.894-.553l2-4A1 1 0 0010 8V5a1 1 0 00-1-1H6zm8 0a1 1 0 00-1 1v4a1 1 0 001 1h2.5l-1 2H14a1 1 0 000 2h2a1 1 0 00.894-.553l2-4A1 1 0 0018 8V5a1 1 0 00-1-1h-3z" />
-          </svg>
-        ),
+        icon: "/menu/blockquote.svg",
         type: "block",
         value: globalConstants.BLOCK.VALUES.QUOTE,
-        iconType: "svg",
+        iconType: "img",
         keywords: ["quote", "blockquote", "callout"],
       },
     ],
@@ -121,36 +117,20 @@ const COMMANDS: CommandGroup[] = [
         id: "bullet-list",
         label: "Bullet List",
         description: "Simple unordered list",
-        icon: (
-          <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path
-              fillRule="evenodd"
-              d="M3 5a1 1 0 100 2 1 1 0 000-2zm3 1a1 1 0 011-1h10a1 1 0 110 2H7a1 1 0 01-1-1zm-3 5a1 1 0 100 2 1 1 0 000-2zm3 1a1 1 0 011-1h10a1 1 0 110 2H7a1 1 0 01-1-1zm-3 5a1 1 0 100 2 1 1 0 000-2zm3 1a1 1 0 011-1h10a1 1 0 110 2H7a1 1 0 01-1-1z"
-              clipRule="evenodd"
-            />
-          </svg>
-        ),
+        icon: "/menu/bullet-list.svg",
         type: "list",
         value: "bullet",
-        iconType: "svg",
+        iconType: "img",
         keywords: ["bullet", "list", "unordered", "ul"],
       },
       {
         id: "numbered-list",
         label: "Numbered List",
         description: "Ordered list with numbers",
-        icon: (
-          <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path
-              fillRule="evenodd"
-              d="M4 4a1 1 0 000 2h.01a1 1 0 000-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1zm-3 5a1 1 0 100 2h.01a1 1 0 100-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1zm-3 5a1 1 0 100 2h.01a1 1 0 100-2H4zm3 1a1 1 0 011-1h9a1 1 0 110 2H8a1 1 0 01-1-1z"
-              clipRule="evenodd"
-            />
-          </svg>
-        ),
+        icon: "/menu/numbered-list.svg",
         type: "list",
         value: "number",
-        iconType: "svg",
+        iconType: "img",
         keywords: ["numbered", "list", "ordered", "ol"],
       },
     ],
@@ -162,16 +142,8 @@ const COMMANDS: CommandGroup[] = [
         id: "image",
         label: "Image",
         description: "Embed an image from URL or upload",
-        icon: (
-          <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path
-              fillRule="evenodd"
-              d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-              clipRule="evenodd"
-            />
-          </svg>
-        ),
-        iconType: "svg",
+        icon: "/menu/image.svg",
+        iconType: "img",
         keywords: ["image", "photo", "picture", "img", "embed"],
       },
       {
@@ -180,16 +152,8 @@ const COMMANDS: CommandGroup[] = [
         type: "text",
         value: "code",
         description: "Syntax-highlighted code snippet",
-        icon: (
-          <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path
-              fillRule="evenodd"
-              d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-        ),
-        iconType: "svg",
+        icon: "/menu/code-block.svg",
+        iconType: "img",
         keywords: ["code", "snippet", "block", "pre", "syntax"],
       },
       {
@@ -197,43 +161,12 @@ const COMMANDS: CommandGroup[] = [
         label: "Table",
         type: "table",
         description: "Insert a structured data table",
-        icon: (
-          <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-            <path
-              fillRule="evenodd"
-              d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z"
-              clipRule="evenodd"
-            />
-          </svg>
-        ),
-        iconType: "svg",
+        icon: "/menu/table.svg",
+        iconType: "img",
         keywords: ["table", "grid", "rows", "columns", "data"],
       },
     ],
   },
-  // {
-  //   group: "AI",
-  //   items: [
-  //     {
-  //       id: "ai-rewrite",
-  //       label: "AI Rewrite",
-  //       description: "Improve selected text with AI",
-  //       icon: "✦",
-  //       iconType: "text",
-  //       keywords: ["ai", "rewrite", "improve", "gpt", "claude", "generate"],
-  //       isAI: true,
-  //     },
-  //     {
-  //       id: "ai-summarize",
-  //       label: "AI Summarize",
-  //       description: "Summarize selected content",
-  //       icon: "✦",
-  //       iconType: "text",
-  //       keywords: ["ai", "summarize", "summary", "shorten"],
-  //       isAI: true,
-  //     },
-  //   ],
-  // },
 ];
 
 // Flatten all items for search
@@ -370,17 +303,13 @@ export default function FloatingMenu({
     >
       {/* Search input */}
       <div className="flex items-center gap-2 px-3 py-2.5 border-b border-neutral-100">
-        <svg
-          className="w-3.5 h-3.5 text-neutral-400 shrink-0"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-            clipRule="evenodd"
-          />
-        </svg>
+        <Image
+          src="/menu/search.svg"
+          alt="Search"
+          width={14}
+          height={14}
+          className="text-neutral-400 shrink-0"
+        />
         <input
           ref={inputRef}
           type="text"
@@ -394,17 +323,12 @@ export default function FloatingMenu({
             onClick={() => setQuery("")}
             className="text-neutral-400 hover:text-neutral-600 transition-colors"
           >
-            <svg
-              className="w-3.5 h-3.5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <Image
+              src="/menu/close.svg"
+              alt="Clear"
+              width={14}
+              height={14}
+            />
           </button>
         )}
       </div>
@@ -477,7 +401,9 @@ export default function FloatingMenu({
                               : "bg-neutral-100 text-neutral-600"
                           }`}
                         >
-                          {item.iconType === "text" ? item.icon : item.icon}
+                          {item.iconType === "text" ? item.icon : (
+                            <Image src={item.icon} alt={item.label} width={16} height={16} />
+                          )}
                         </div>
 
                         {/* Label + description */}
@@ -499,17 +425,13 @@ export default function FloatingMenu({
 
                         {/* Active indicator */}
                         {isActive && (
-                          <svg
-                            className="w-3.5 h-3.5 text-neutral-400 shrink-0"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
+                          <Image
+                            src="/menu/chevron-right.svg"
+                            alt="Selected"
+                            width={14}
+                            height={14}
+                            className="text-neutral-400 shrink-0"
+                          />
                         )}
                       </button>
                     </div>
