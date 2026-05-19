@@ -269,7 +269,7 @@ const Toolbar = () => {
               display: "inline-flex",
               alignItems: "center",
               gap: "6px",
-              fontSize: theme.fontSizes.sm,
+              color: theme.colors.textOnDanger,
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
