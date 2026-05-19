@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ✏️ Lexical Rich Text Editor
 
-## Getting Started
+A feature-rich collaborative text editor built with **Next.js 16**, **Lexical**, and **TypeScript**.
 
-First, run the development server:
+🌐 **Live Demo:** [lexical-project.vercel.app](https://lexical-project.vercel.app)
+
+## 🚀 Features
+
+### 📝 Rich Text Editing
+Full formatting toolbar with bold, italic, underline, strikethrough, headings, lists, blockquotes, code blocks, and image insertion. A slash-command floating menu provides quick access to block-level formatting.
+
+### 🔗 Intelligent Link Cards
+Paste a URL and it auto-converts into a custom link node. Hover to see a preview card with OG metadata (title, description, favicon) fetched server-side via `/api/link-preview`. Inline editing lets you modify or unlink URLs directly.
+
+### 📊 Resizable Tables
+Custom table nodes with drag-to-resize handles, insert/remove row and column buttons on hover, and dimension persistence via MutationObserver.
+
+### 👥 Real-Time Collaboration
+A dedicated `/collaboration` page powered by **Yjs** + **y-websocket**. Features include name entry on join, presence avatars, remote cursors, connection status indicator, observer (read-only) mode, and LevelDB persistence on the server.
+
+### 📈 Status Bar
+Minimizable status bar showing word count, character count, and estimated reading time. Collapses into an animated breathing dot that flashes on content changes.
+
+## 🎨 Design Library
+
+All UI components use [`@huzaifah191001/design-library`](https://www.npmjs.com/package/@huzaifah191001/design-library) which provides:
+
+- **Button** — 4 variants: `default`, `subtle`, `filled`, `danger`
+- **Checkbox** — `highlighted` and `minimal` variants
+- **Select**, **ThemeProvider**, **useTheme()** — full light/dark theme support with semantic color tokens
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 (Turbopack) |
+| Editor | Lexical |
+| State | Redux Toolkit |
+| Collaboration | Yjs, y-websocket, @lexical/yjs |
+| Persistence | sessionStorage (solo), LevelDB (collab) |
+
+## 📦 Getting Started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev          # Start the editor
+npm run collab-server  # Start WebSocket server for collaboration
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
