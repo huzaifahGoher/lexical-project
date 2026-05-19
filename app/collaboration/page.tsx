@@ -28,7 +28,7 @@ import ConnectionStatusIndicator from './components/ConnectionStatusIndicator';
  * Header component rendered inside CollaborationProvider so it can
  * access the collaboration context for presence and connection status.
  */
-function CollaborationHeader() {
+function CollaborationHeader({isObserver}:{isObserver: boolean}) {
   const { connectionStatus, connectedUsers, localUser, error, retry } = useCollaboration();
   const theme = useTheme();
 
@@ -66,7 +66,7 @@ function CollaborationHeader() {
         <PresenceAvatarBar users={connectedUsers} localUser={localUser} />
         <div className="flex items-center gap-3">
           <ConnectionStatusIndicator status={connectionStatus} />
-          <Link href="/" title="Solo Editor" style={{ textDecoration: "none" }}>
+          {isObserver && (<Link href="/" title="Solo Editor" style={{ textDecoration: "none" }}>
             <Button variant="filled" style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: theme.fontSizes.sm }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -77,7 +77,7 @@ function CollaborationHeader() {
               />
               Solo Editor
             </Button>
-          </Link>
+          </Link>)}
         </div>
       </div>
     </div>
@@ -107,7 +107,7 @@ function CollaborationContent({ userName, userColor, isObserver }: { userName: s
         style={{ backgroundColor: theme.colors.bg, color: theme.colors.text }}
       >
         <CollaborationProvider userName={userName} isObserver={isObserver}>
-          <CollaborationHeader />
+          <CollaborationHeader isObserver={isObserver}/>
           <div className="flex-1 overflow-auto p-2">
             <CollaborativeEditor userName={userName} userColor={userColor} isObserver={isObserver} />
           </div>
