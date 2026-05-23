@@ -33,6 +33,8 @@ import {
   handleHeading,
 } from "./utils/toolbarUtils";
 import Image from "next/image";
+import { INSERT_TABLE_COMMAND } from "@lexical/table";
+import { onUploadImage } from "@/app/utils/uploadImage";
 
 const Toolbar = () => {
   const [editor] = useLexicalComposerContext();
@@ -40,8 +42,7 @@ const Toolbar = () => {
   const theme = useTheme();
   const pathname = usePathname();
   const router = useRouter();
-  const { isOpen, toggle, close, buttonRef, popoverRef } =
-    useOverflowPopover();
+  const { isOpen, toggle, close, buttonRef, popoverRef } = useOverflowPopover();
 
   const isCollaborationPage = pathname === "/collaboration";
   const switchHref = isCollaborationPage ? "/" : "/collaboration";
@@ -49,10 +50,10 @@ const Toolbar = () => {
 
   // Partition formatting options into primary and overflow
   const primaryFormattingItems = formattingOptions.filter((item) =>
-    isPrimaryItem(item.label)
+    isPrimaryItem(item.label),
   );
   const overflowFormattingItems = formattingOptions.filter(
-    (item) => !isPrimaryItem(item.label)
+    (item) => !isPrimaryItem(item.label),
   );
 
   // Build overflow items array with category annotations
@@ -68,7 +69,7 @@ const Toolbar = () => {
         action: () => {
           editor.dispatchCommand(
             FORMAT_TEXT_COMMAND,
-            item.dispatchValue as TextFormatType
+            item.dispatchValue as TextFormatType,
           );
         },
       });
@@ -83,7 +84,7 @@ const Toolbar = () => {
         action: () => {
           editor.dispatchCommand(
             FORMAT_ELEMENT_COMMAND,
-            item.dispatchValue as ElementFormatType
+            item.dispatchValue as ElementFormatType,
           );
         },
       });
@@ -133,12 +134,19 @@ const Toolbar = () => {
     });
 
     return items;
-  }, [editor, overflowFormattingItems, switchLabel, isCollaborationPage, switchHref, router]);
+  }, [
+    editor,
+    overflowFormattingItems,
+    switchLabel,
+    isCollaborationPage,
+    switchHref,
+    router,
+  ]);
 
   // Group overflow items for the popover
   const overflowGroups = useMemo(
     () => groupOverflowItems(overflowItems),
-    [overflowItems]
+    [overflowItems],
   );
 
   // Handle action from overflow popover
@@ -180,6 +188,48 @@ const Toolbar = () => {
 
       {/* Overflow items — visible only at lg+ (desktop) */}
       <div className="hidden lg:contents">
+        <Button
+          title="Insert table"
+          onClick={() =>
+            editor.dispatchCommand(INSERT_TABLE_COMMAND, {
+              rows: String(5),
+              columns: String(5),
+            })
+          }
+        >
+          <Image
+            width={20}
+            height={20}
+            alt="Insert table"
+            src="/insert/table.svg"
+          />
+        </Button>
+        <Button
+          title="Upload Image"
+          onClick={() => {
+            const inputElement = document.getElementById(
+              "upload-image-toolbar",
+            );
+            if (!inputElement) return;
+            inputElement.click();
+          }}
+        >
+          <input
+            id="upload-image-toolbar"
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={(e) => {
+              onUploadImage(e, editor);
+            }}
+          />
+          <Image
+            width={20}
+            height={20}
+            alt="Upload image"
+            src="/insert/image.svg"
+          />
+        </Button>
         {overflowFormattingItems.map((item: any, index: number) => (
           <Button
             key={`overflow-fmt-${index}-${item.label}`}
@@ -188,12 +238,7 @@ const Toolbar = () => {
             }}
             title={item.label}
           >
-            <Image
-              width={20}
-              height={20}
-              alt={item.label}
-              src={item.iconSrc}
-            />
+            <Image width={20} height={20} alt={item.label} src={item.iconSrc} />
           </Button>
         ))}
         {alignmentOptions.map((item: any, index: number) => (
@@ -202,17 +247,12 @@ const Toolbar = () => {
             onClick={() => {
               editor.dispatchCommand(
                 FORMAT_ELEMENT_COMMAND,
-                item.dispatchValue
+                item.dispatchValue,
               );
             }}
             title={item.label}
           >
-            <Image
-              width={20}
-              height={20}
-              alt={item.label}
-              src={item.iconSrc}
-            />
+            <Image width={20} height={20} alt={item.label} src={item.iconSrc} />
           </Button>
         ))}
         {listOptions.map((item: any, index: number) => (
@@ -223,12 +263,7 @@ const Toolbar = () => {
             }}
             title={item.label}
           >
-            <Image
-              width={20}
-              height={20}
-              alt={item.label}
-              src={item.iconSrc}
-            />
+            <Image width={20} height={20} alt={item.label} src={item.iconSrc} />
           </Button>
         ))}
         <Button onClick={() => exportMarkDown(editor)}>Markdown</Button>

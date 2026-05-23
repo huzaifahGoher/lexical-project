@@ -289,9 +289,7 @@ export default function FloatingMenu({
     } else if (item.type === "text") {
       editor.dispatchCommand(FORMAT_TEXT_COMMAND, item.value as TextFormatType);
     } else if (item.type === "table") {
-      editor.update(()=>{
-        editor.dispatchCommand(INSERT_TABLE_COMMAND, {rows: String(5), columns: String(5)});
-      })
+      editor.dispatchCommand(INSERT_TABLE_COMMAND, {rows: String(5), columns: String(5)});
     }
     closeEditor();
   };
