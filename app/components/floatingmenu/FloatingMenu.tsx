@@ -17,6 +17,7 @@ import {
 import { formattingOptions } from "../toolbar/constants/toolbarConstant";
 import { $createTableNode, INSERT_TABLE_COMMAND } from "@lexical/table";
 import Image from "next/image";
+import { onUploadImage } from "@/app/utils/uploadImage";
 
 // ─── Type Definitions ─────────────────────────────────────────────────────────
 
@@ -367,23 +368,9 @@ export default function FloatingMenu({
                           type="file"
                           accept="image/*"
                           style={{ display: "none" }}
-                          onChange={(e) => {
-                            const files = e.target.files;
-                            if (!files) return;
-                            for (const file of files) {
-                              const reader = new FileReader();
-                              reader.onload = () => {
-                                const base64 = reader.result;
-                                if (!base64) return;
-                                editor.update(() => {
-                                  const imageNode = $createImageNode(
-                                    base64.toString()
-                                  );
-                                  $insertNodes([imageNode]);
-                                });
-                              };
-                              reader.readAsDataURL(file);
-                            }
+                          onChange={(e)=>{
+                            onUploadImage(e, editor);
+                            onClose?.();
                           }}
                         />
                       )}
