@@ -111,16 +111,6 @@ const Toolbar = () => {
       },
     });
 
-    // Utilities: Block Select (handled via handleHeading)
-    items.push({
-      label: "Block Select",
-      category: "utilities",
-      action: () => {
-        // Block select is a dropdown in desktop; in overflow we default to normal
-        handleHeading(editor);
-      },
-    });
-
     // Utilities: Collaborate link
     items.push({
       label: switchLabel,
@@ -130,6 +120,18 @@ const Toolbar = () => {
       category: "utilities",
       action: () => {
         router.push(switchHref);
+      },
+    });
+
+    items.push({
+      label: "Table",
+      iconSrc: "/insert/table.svg",
+      category: "utilities",
+      action: () => {
+        editor.dispatchCommand(INSERT_TABLE_COMMAND, {
+          rows: String(5),
+          columns: String(5),
+        });
       },
     });
 
