@@ -91,7 +91,6 @@ const config = {
 const onChange = debounce((editorState: EditorState, editor: LexicalEditor) => {
   const data = editorState.toJSON();
   sessionStorage.setItem("data", JSON.stringify(data));
-  console.log(editorState.toJSON());
 }, 200);
 
 const Editor = () => {
