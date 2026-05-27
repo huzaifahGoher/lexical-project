@@ -47,6 +47,7 @@ function parseMetadata(html: string, url: string): Omit<LinkPreviewAPIResponse, 
   const ogImage = getMetaContent(html, 'property="og:image"') ??
     getMetaContent(html, "property=\"og:image\"");
 
+  // Extract favicon
   const favicon = extractFavicon(html, url);
 
   return {
