@@ -4,7 +4,7 @@ import { useTheme } from "@huzaifah191001/design-library";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { $getRoot, EditorState } from "lexical";
 import Image from "next/image";
-import React, { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback } from "react";
 
 const StatusBarPlugin = () => {
   const dispatch = useAppDispatch();
