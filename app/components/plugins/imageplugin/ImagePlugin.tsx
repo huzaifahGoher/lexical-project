@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { $createImageNode } from "@/app/customnodes/utils/customNodeUtils";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $insertNodes, COMMAND_PRIORITY_LOW, PASTE_COMMAND } from "lexical";
