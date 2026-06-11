@@ -35,8 +35,7 @@ import { CustomLinkNode } from "@/app/customnodes/linknode/linkNode";
 import { debounce } from "lodash";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
-import {
-  CustomTableCellNode, CustomTableNode, CustomTableRowNode } from "@/app/customnodes/tablenode/tableNode";
+import { CustomTableCellNode, CustomTableNode, CustomTableRowNode } from "@/app/customnodes/tablenode/tableNode";
 import { $createCustomTableCellNode, $createCustomTableNode, $createCustomTableRowNode } from "@/app/customnodes/utils/customNodeUtils";
 
 const config = {
