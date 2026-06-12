@@ -4,8 +4,7 @@ import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import {
-  EditorState, LexicalEditor,
-  ParagraphNode,
+  EditorState, LexicalEditor, ParagraphNode,
   TextNode,
 } from "lexical";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
@@ -32,7 +31,8 @@ import TableDecoratorPlugin from "../plugins/tabledecoratorplugin/TableDecorator
 import HoverCardPlugin from "../plugins/hovercardplugin/HoverCardPlugin";
 import { CustomLinkNode } from "@/app/customnodes/linknode/linkNode";
 import { debounce } from "lodash";
-import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
+import { TableCellNode, 
+  TableNode, TableRowNode } from "@lexical/table";
 import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import { CustomTableCellNode, CustomTableNode, CustomTableRowNode } from "@/app/customnodes/tablenode/tableNode";
 import { $createCustomTableCellNode, $createCustomTableNode, $createCustomTableRowNode } from "@/app/customnodes/utils/customNodeUtils";
