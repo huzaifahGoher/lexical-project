@@ -1,7 +1,6 @@
 export const customNodesConstants = {
     IMAGE: {
-        TYPE: "imageNode"
-    },
+        TYPE: "imageNode"},
     TABLE: {
         TYPE: "tableNode",
         ROW_TYPE: "tableRowNode",
