@@ -1,5 +1,5 @@
 import { TableNode, TableRowNode, TableCellNode } from "@lexical/table";
-import { customNodesConstants } from "../constants/customNodeConstants";
+import { customNodesConstants  } from "../constants/customNodeConstants";
 import {
   SerializedTableCellNodeType, SerializedTableNodeType,
   SerializedTableRowNodeType,
