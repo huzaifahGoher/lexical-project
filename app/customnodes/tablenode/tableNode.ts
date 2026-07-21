@@ -6,8 +6,6 @@ import {
 } from "../types/customNodeTypes";
 import { EditorConfig, LexicalEditor } from "lexical";
 
-// ─── Table ───────────────────────────────────────────────────────────────────
-
 export class CustomTableNode extends TableNode {
   __width: number | null;
   __height: number | null;
