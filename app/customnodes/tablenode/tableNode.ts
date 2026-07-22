@@ -2,7 +2,7 @@ import { TableNode, TableRowNode, TableCellNode } from "@lexical/table";
 import { customNodesConstants  } from "../constants/customNodeConstants";
 import { 
   SerializedTableCellNodeType, SerializedTableNodeType,
-  SerializedTableRowNodeType,
+  SerializedTableRowNodeType, 
 } from "../types/customNodeTypes";
 import { EditorConfig, LexicalEditor } from "lexical";
 
